@@ -1,7 +1,28 @@
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import MyAlgoConnect from "@randlabs/myalgo-connect";
+import axios from "axios";
+import algosdk from "algosdk";
 import "../styles/createelection.css";
 
 const CreateElection = () => {
+  const URL = "http://localhost:5000";
+  // algod Client
+  const algodClient = new algosdk.Algodv2(
+    {
+      "X-API-Key": "Xy8NsXxfJg2cQ2YQ4pax6aLrTcj55jZ9mbsNCM30 ",
+    },
+    "https://testnet-algorand.api.purestake.io/ps2",
+    ""
+  );
+
+  const myAlgoWallet = new MyAlgoConnect();
+
+  // wallet-type & address
+  const walletType = localStorage.getItem("wallet-type");
+  const walletAddress = localStorage.getItem("address");
+
+  const dispatch = useDispatch();
   const [items, setitems] = useState([]);
 
   const [itemInp, setItemInp] = useState("");
@@ -38,7 +59,7 @@ const CreateElection = () => {
     if (itemInp.trim().length > 0 && !items.includes(itemInp)) {
       setitems((prev) => [
         ...prev,
-        { name: itemInp, img: itemImg ? itemImg : "" },
+        { name: itemInp, image: itemImg ? itemImg : "" },
       ]);
       setItemInp("");
       setItemImg(null);
@@ -50,19 +71,186 @@ const CreateElection = () => {
     setitems(items?.filter((it) => it !== item));
   };
 
+  const createCandidates = (candidates) => {
+    const candidatesCred = [];
+    for (let candidate of candidates) {
+      const { sk: private_key, addr: address } = algosdk.generateAccount();
+      candidatesCred.push({
+        ...candidate,
+        private_key: algosdk.secretKeyToMnemonic(private_key),
+        address,
+      });
+    }
+
+    return candidatesCred;
+  };
+
+  // send 1ALGO to all candidates
+  const topUpCandidates = async (candidates) => {
+    // array to store all txn object for all candidates
+    const txns = [];
+    const AMOUNT = 1000000;
+
+    algodClient
+      .getTransactionParams()
+      .do()
+      .then((suggestedParams) => {
+        for (let candidate of candidates) {
+          const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+            from: walletAddress,
+            to: candidate.address,
+            amount: AMOUNT,
+            suggestedParams,
+          });
+          txns.push(txn);
+        }
+
+        // get the group ID and assign to all transactions
+        const groupID = algosdk.computeGroupID(txns);
+        for (let i = 0; i < txns.length; i++) txns[i].group = groupID;
+
+        // sign txns based on the wallet used to login
+        if (walletType === "algosigner") {
+          window.AlgoSigner.signTxn(
+            txns.map((txn) => ({
+              txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
+            }))
+          ).then((signedTxns) => {
+            algodClient
+              .sendRawTransaction(
+                signedTxns.map((txn) =>
+                  window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
+                )
+              )
+              .do()
+              .then((ids) => console.log(ids));
+          });
+        } else if (walletType === "my-algo") {
+          myAlgoWallet
+            .signTransaction(txns.map((txn) => txn.toByte()))
+            .then((signedTxns) => {
+              // send the transactions to the net.
+              algodClient
+                .sendRawTransaction(signedTxns.map((txn) => txn.blob))
+                .do()
+                .then((ids) => console.log(ids));
+            });
+        }
+      });
+  };
+
+  const optinCandidates = (candidates) => {
+    // choice coin asset ID
+    const assetIndex = 21364625;
+
+    // array to store txn object
+    const txnsArray = [];
+
+    // amount of CHoice to send. `0` for Opt In
+    const amount = 0;
+
+    algodClient
+      .getTransactionParams()
+      .do()
+      .then((suggestedParams) => {
+        for (let candidate of candidates) {
+          const transactionOptions = {
+            from: candidate.address,
+            to: candidate.address,
+            closeRemainderTo: undefined,
+            revocationTarget: undefined,
+            amount,
+            assetIndex,
+            suggestedParams,
+          };
+          const txn =
+            algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
+              transactionOptions
+            );
+          txnsArray.push(txn);
+        }
+
+        // get the group ID and assign to all transactions
+        const groupID = algosdk.computeGroupID(txnsArray);
+        for (let i = 0; i < txnsArray.length; i++) txnsArray[i].group = groupID;
+
+        // sign txns based on the wallet used to login
+        if (walletType === "algosigner") {
+          window.AlgoSigner.signTxn(
+            txnsArray.map((txn) => ({
+              txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
+            }))
+          ).then((signedTxns) => {
+            // send the transactions to the net.
+            algodClient
+              .sendRawTransaction(
+                signedTxns.map((txn) =>
+                  window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
+                )
+              )
+              .do()
+              .then((ids) => console.log(ids));
+          });
+        } else if (walletType === "my-algo") {
+          myAlgoWallet
+            .signTransaction(txnsArray.map((txn) => txn.toByte()))
+            .then((signedTxns) => {
+              // send the transactions to the net.
+              algodClient
+                .sendRawTransaction(signedTxns.map((txn) => txn.blob))
+                .do()
+                .then((ids) => console.log(ids));
+            });
+        }
+      });
+  };
+
   // Create Election Function
   const createElection = () => {
-    if (processTit.trim().length < 1) return;
-    //
+    if (processTit.trim().length < 1) {
+      alert("Process Title required!");
+      return;
+    }
 
     const electionData = {
-      headerImage: hdImg ? hdImg : "",
+      process_image: hdImg ? hdImg : "",
       candidates: items,
       processTit,
     };
 
-    // Logic to Create Election
-    console.log(electionData);
+    // check if localStorage items were deleted.
+    if (!walletType || !walletAddress) {
+      dispatch({ type: "modal_connect" });
+      return;
+    }
+
+    // create candidates address and secretKey
+    const updatedCandidates = createCandidates(electionData.candidates);
+
+    topUpCandidates(updatedCandidates);
+
+    // this should not show while `topUpCandidates` is still running
+    console.log("ToPPED UP");
+
+    optinCandidates(updatedCandidates);
+
+    const headers = {
+      "X-Wallet-Address": walletAddress,
+    };
+
+    // add choice per vote input
+    axios
+      .post(
+        `${URL}/elections/create`,
+        {
+          candidates: updatedCandidates,
+          choice_per_vote: 1,
+          process_image: electionData.process_image,
+          title: electionData.processTit,
+        },
+        { headers }
+      )
+      .then((response) => alert(response.data));
 
     // Reset Inputs
     setitems([]);

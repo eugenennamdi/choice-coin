@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const StartElection = () => {
+  const isWalletConnected =
+    localStorage.getItem("wallet-type") === null ? false : true;
   const dispatch = useDispatch();
 
   return (
@@ -52,7 +54,7 @@ const StartElection = () => {
         <div className="create_elect">
           {
             // If Wallet is connected this would be true
-            false ? (
+            isWalletConnected ? (
               <NavLink
                 style={{ width: "100%", height: "100%", textAlign: "center" }}
                 to={`./create`}
