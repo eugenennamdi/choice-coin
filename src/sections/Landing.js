@@ -1,5 +1,6 @@
 import "../styles/landing.css";
-import ScrollTextLand from "../components/ScrollTextLand";
+import loadable from "@loadable/component";
+const ScrollTextLand = loadable(() => import("../components/ScrollTextLand"));
 
 const Landing = () => {
   return (
@@ -42,7 +43,7 @@ const Landing = () => {
             What's Fortior?
           </a>
           <a href="https://fortiorblockchain.com/" className="ld_butt">
-            Read More
+            About Choice
           </a>
         </div>
       </div>

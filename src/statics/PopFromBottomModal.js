@@ -67,7 +67,7 @@ const PopFromBottomModal = () => {
                     rel="noreferrer"
                     href="https://github.com/ChoiceCoin/White_Paper"
                   >
-                    <i class="uil uil-newspaper"></i> White Paper
+                    <i className="uil uil-newspaper"></i> White Paper
                   </a>
                 </li>
                 <li>
@@ -76,7 +76,7 @@ const PopFromBottomModal = () => {
                     rel="noreferrer"
                     href="https://choice-coin.gitbook.io/choice-coin-docs/getting-started/introduction"
                   >
-                    <i class="uil uil-book-alt"></i> Docs
+                    <i className="uil uil-book-alt"></i> Docs
                   </a>
                 </li>
                 <li>
@@ -85,7 +85,7 @@ const PopFromBottomModal = () => {
                     rel="noreferrer"
                     href="https://medium.com/@ChoiceCoin"
                   >
-                    <i class="uil uil-document-layout-center"></i>Our Blog
+                    <i className="uil uil-document-layout-center"></i>Our Blog
                   </a>
                 </li>
               </ul>
@@ -115,7 +115,7 @@ const PopFromBottomModal = () => {
                     rel="noreferrer"
                     href="https://medium.com/@ChoiceCoin"
                   >
-                    <i class="uil uil-medium-m"></i> <p>Medium</p>
+                    <i className="uil uil-medium-m"></i> <p>Medium</p>
                   </a>
                 </li>
                 <li>

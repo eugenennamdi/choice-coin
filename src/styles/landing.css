@@ -88,9 +88,6 @@
 
   min-width: 250%;
   height: 1500px;
-
-  /* opacity: 0.9; */
-  /* filter: blur(1px); */
 }
 
 .svg_back_svg #path-2,
@@ -113,17 +110,12 @@
 }
 
 .ld_butt {
-  /* padding: 10px 20px;
-  background: red;
-
-  background: var(--main-col); */
-
   display: flex;
   font-size: 13px;
   font-weight: 600;
   line-height: 14px;
   border-radius: 8px;
-  padding: 14px 20px;
+  padding: 14px 18px;
   letter-spacing: 1px;
   color: var(--white);
   align-items: center;

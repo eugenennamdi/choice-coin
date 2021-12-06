@@ -1,5 +1,6 @@
 import "../styles/footer.css";
-import ScrollText from "./ScrollText";
+import loadable from "@loadable/component";
+const ScrollText = loadable(() => import("./ScrollText"));
 
 const Footer = () => {
   <ScrollText />;
@@ -55,7 +56,7 @@ const Footer = () => {
                   rel="noreferrer"
                   href="https://medium.com/@ChoiceCoin"
                 >
-                  <i class="uil uil-medium-m"></i> <p>Medium</p>
+                  <i className="uil uil-medium-m"></i> <p>Medium</p>
                 </a>
               </li>
               <li>
