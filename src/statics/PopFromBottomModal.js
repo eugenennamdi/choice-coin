@@ -112,11 +112,11 @@ const PopFromBottomModal = () => {
                 <div className="connet_butt">
                   <div className="connect_wallet_img">
                     <img
-                      src="https://i.postimg.cc/RZmD7SWz/icon-37675b59.png"
+                      src="https://i.postimg.cc/L4JB4JwT/Algo-Signer-2ec35000.png"
                       alt=""
                     />
                   </div>
-                  <p className="connect_wallet_txt">Algorand Mobile Wallet</p>
+                  <p className="connect_wallet_txt">AlgoSigner</p>
                 </div>
               </>
             )
