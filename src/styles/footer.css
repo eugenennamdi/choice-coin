@@ -6,6 +6,9 @@
   padding: 10vh 5vw 0px;
   color: var(--txt-alt);
 }
+.light_theme .hm_ft {
+  font-weight: 500;
+}
 
 .ft_cont {
   height: 100%;
@@ -24,17 +27,29 @@
 .ft_hfr_1 {
   width: 460px;
 }
+.ft_hfr_1 p {
+  color: var(--wht);
+  display: flex;
+  font-weight: 400;
+  line-height: 22px;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  font-family: "Barlow", sans-serif;
+}
+.light_theme .ft_hfr_1 p {
+  font-weight: 500;
+}
+
 .ft_hfr_1 p:first-child {
-  color: var(--white);
-  line-height: 118%;
-  word-spacing: -4px;
-  font-family: "TinyMono", monospace;
+  opacity: 0.8;
   margin-bottom: 20px;
+  line-height: 118%;
 }
 
 .ft_hfr_1 p:nth-child(2) {
+  opacity: 0.7;
   font-size: 16px;
-  line-height: 24px;
+  line-height: 22px;
 }
 
 /* Ft Inn
@@ -79,7 +94,7 @@
 .ft_r2 {
   height: 1px;
   margin: 1.5em 0px 40px;
-  border-top: 1px solid rgba(232, 232, 232, 0.3);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .ft_r3 {
@@ -117,7 +132,7 @@
 .Marquee__Word {
   display: inline-block;
   font-size: 16px;
-  opacity: 0.8;
+  /* opacity: 0.8; */
 }
 .Marquee__Dot {
   display: inline-block;
@@ -204,7 +219,7 @@
 
   .hm_ft {
     padding-top: 0px;
-    padding: 10vh 5vw 0px;
+    padding: 5vh 5vw 0px;
   }
   .ft_hfr_1 {
     width: 90%;

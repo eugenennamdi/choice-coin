@@ -1,10 +1,11 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 
-import Faq from "./pages/Faq";
-import Home from "./pages/Home";
-import Elections from "./pages/Elections";
-import Participate from "./pages/Participate";
-import CreateElection from "./sections/CreateElection";
+import Faq from "./faq";
+import Home from "./Home";
+import Elections from "./elections";
+import Participate from "./participate";
+import CreateElection from "./elections/create";
+
 import TopNavigationBar from "./statics/TopNavigationBar";
 import BottomNavigationBar from "./statics/BottomNavigationBar";
 

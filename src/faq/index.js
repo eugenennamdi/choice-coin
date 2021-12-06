@@ -41,7 +41,7 @@ const Faq = () => {
                 }
               }}
             >
-              {item.que}
+              <p>{item.que}</p>
             </button>
             <div className="collap_cont">
               <p>{item.ans}</p>
@@ -51,7 +51,10 @@ const Faq = () => {
 
         <div className="ask_q_sect">
           <button className="ask_que">
-            Ask a question or contribute <i class="uil uil-arrow-up-right"></i>
+            <p>
+              Ask a question or contribute{" "}
+              <i class="uil uil-arrow-up-right"></i>
+            </p>
           </button>
         </div>
       </div>

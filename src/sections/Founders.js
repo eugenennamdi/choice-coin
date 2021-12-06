@@ -10,7 +10,7 @@ const Founders = () => {
         {/* <div className="found_scr_inn"> */}
         <div className="founder_box">
           <div className="founder_img">
-            <img src="./img/5.png" alt="" />
+            <img src="./img/1.png" alt="" />
           </div>
           <div className="founder_det">
             <p className="fo_name">Archie Chaudhury</p>
@@ -19,7 +19,7 @@ const Founders = () => {
         </div>
         <div className="founder_box">
           <div className="founder_img">
-            <img src="./img/6.jpg" alt="" />
+            <img src="./img/2.png" alt="" />
           </div>
           <div className="founder_det">
             <p className="fo_name">Brian Haney</p>
@@ -28,11 +28,11 @@ const Founders = () => {
         </div>
         <div className="founder_box">
           <div className="founder_img">
-            <img src="./img/4.jpg" alt="" />
+            <img src="./img/3.png" alt="" />
           </div>
           <div className="founder_det">
             <p className="fo_name">Oligbo Julie</p>
-            <p className="fo_pos">Senior Developer</p>
+            <p className="fo_pos">Senior Dev</p>
             {/* </div> */}
           </div>
         </div>

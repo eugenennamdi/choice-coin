@@ -1,23 +1,49 @@
 import "../styles/landing.css";
+import ScrollTextLand from "../components/ScrollTextLand";
 
 const Landing = () => {
   return (
     <div className="landing" id="landing">
-      {/* <SvgBack /> */}
+      <ScrollTextLand
+        word={"Join our discord channel and help grow our codebase"}
+      />
+
       <div className="land_cov">
         <div className="land_item1">
           <p className="hdy">
-            Governance <br /> token for a new age.
+            The Democratic <br /> Token Built Just For <br /> a New Age.
           </p>
           <p className="suby">
-            Choice Coin is a governance token that powers the Fortior Voting
-            Protocol, which leverages Artificial Intelligence and Quantum
-            Computing.
+            Choice Coin is an Algorand Standard Asset that powers Decentralized
+            Decisions, a voting and governance software built directly on the
+            Algorand Blockchain.
+            <br />
+            <br />
+            Decentralized Decisions enables organizations to make governance
+            decisions in an open and decentralized manner.
           </p>
         </div>
 
         <div className="land_item2">
           <SvgBack />
+        </div>
+
+        <div className="land_item1">
+          <p className="suby">
+            For the Choice Coin DAO, Decentralized Decisions leverages
+            Proof-of-Participation as a governance mechanism, allowing voters to
+            have a larger say in direct proportion to their contribution to the
+            network.
+          </p>
+        </div>
+
+        <div className="land_butts">
+          <a href="https://fortiorblockchain.com/" className="ld_butt">
+            What's Fortior?
+          </a>
+          <a href="https://fortiorblockchain.com/" className="ld_butt">
+            Read More
+          </a>
         </div>
       </div>
     </div>

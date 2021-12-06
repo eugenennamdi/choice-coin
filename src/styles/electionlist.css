@@ -22,17 +22,23 @@
   color: var(--wht);
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 13px 0px 16px;
+  padding: 15px 0px 16px;
   font-family: "Barlow", sans-serif;
 
   position: -webkit-sticky;
   position: sticky;
   z-index: 2;
+  margin-bottom: 20px;
   background: var(--background);
   top: calc(var(--sm-hd-height));
+  border-bottom: 1px solid var(--border-default);
 }
 .ptt_hd p {
   opacity: 0.7;
+}
+
+.light_theme .ptt_hd {
+  font-weight: 500;
 }
 
 /*  */
@@ -158,8 +164,13 @@
   font-size: 13px;
   color: var(--wht);
   padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--background);
   border-radius: 8px;
+  border: var(--list-border);
+}
+
+.light_theme .card_butts button {
+  font-weight: 500;
 }
 
 /* Candidates Percentages */

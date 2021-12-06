@@ -4,12 +4,12 @@
   position: relative;
   display: flex;
   color: var(--txt-alt);
-  padding: 15vh 5vw 0vh;
+  padding: 10vh 5vw 0vh;
   flex-direction: column;
 }
 .found_scr {
   width: 100%;
-  height: 380px;
+  height: 350px;
   margin-top: 5vh;
   overflow: scroll hidden;
   position: relative;
@@ -37,14 +37,18 @@
   align-items: flex-start;
   transition: all 0.8s;
   width: 30vw;
+  margin-right: 30px;
 }
 .founder_img {
   width: 100%;
   height: 75%;
   display: flex;
+  border-radius: 8px;
   overflow: hidden;
   align-items: center;
+  margin-right: 20px;
   flex-direction: column;
+  background: var(--back-1);
 }
 .founder_img img {
   height: 100%;
@@ -59,8 +63,9 @@
 
 .founder_det .fo_name {
   font-size: 18px;
-  color: var(--white);
+  color: var(--wht);
   font-weight: 500;
+  opacity: 0.8;
 }
 .founder_det .fo_pos {
   font-size: 14px;
@@ -83,7 +88,7 @@
   .founders {
     flex-direction: column;
     align-items: flex-start;
-    padding: 10vh 7vw 0vh;
+    padding: 5vh 5vw 0vh;
     margin-top: 0vh;
   }
 }
@@ -92,6 +97,6 @@
     -ms-flex-direction: column;
     flex-direction: column;
     padding-right: 30px;
-    width: 60vw;
+    width: 55vw;
   }
 }

@@ -37,6 +37,9 @@
 .faq_hd p {
   opacity: 0.7;
 }
+.light_theme .faq_hd {
+  font-weight: 500;
+}
 
 .collap_cov {
   width: 100%;
@@ -52,12 +55,19 @@
   outline: none;
   font-size: 15px;
   color: var(--wht);
-  opacity: 0.7;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--back-1);
+}
+.collapsible p {
+  opacity: 0.8;
+}
+
+.light_theme .collapsible p {
+  font-weight: 500;
 }
 
 .colap_active {
@@ -100,14 +110,18 @@
 }
 
 .ask_que {
-  color: #fff;
-  font-size: 13px;
-  background: #222;
-  padding: 8px 18px;
+  width: 100%;
+  color: var(--wht);
+  font-size: 15px;
+  background: var(--back-1);
+  padding: 14px 18px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 500;
   letter-spacing: 0.4px;
   white-space: nowrap;
   margin-top: 20px;
+}
+.ask_que p {
+  opacity: 0.8;
 }

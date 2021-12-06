@@ -28,7 +28,7 @@ body {
 
   --back-1: #363636;
 
-  --white: #ddd;
+  --white: #eee;
   --wht: #fff;
   --dark-800: #242424;
   --dark-800: #1a1a1a;
@@ -38,9 +38,10 @@ body {
   --sm-hd-height: 60px;
   --sm-nav-height: 70px;
   --main-col: #2958ff;
+  --main-col-inv: #ccf381;
   --bord-dark: #666;
   /* --main-col: #0300e2; */
-  --l1: #e9e9e935;
+  --l1: #e6e6e635;
 }
 
 main {
@@ -51,8 +52,16 @@ main {
 
 .light_theme {
   --color: "#808080";
+  --txt-alt: #555;
+  --wht: #222;
+
+  --back-1: #e3e3e3;
+  --l1: #333;
+
+  --list-border: 1px solid rgba(0, 0, 0, 18%);
+
   --background: var(--white);
-  --border-default: rgba(0, 0, 0, 8%);
+  --border-default: rgba(0, 0, 0, 18%);
   background-color: var(--background);
 }
 .dark_theme {
@@ -69,14 +78,21 @@ main {
   width: 100vw;
   display: flex;
   font-size: 13px;
-  color: #808080;
+  color: var(--wht);
   position: fixed;
   flex-direction: row;
   z-index: 90;
   height: var(--sm-hd-height);
   justify-content: flex-end;
   background-color: var(--background);
-  /* border-bottom: 1px solid var(--border-default); */
+  border-bottom: 1px solid var(--border-default);
+}
+.small_header p {
+  opacity: 0.8;
+}
+
+.light_theme .small_header {
+  font-weight: 500;
 }
 
 .sm_act_menu_butt {
@@ -90,7 +106,7 @@ main {
 }
 .react-switch {
   margin: 0px 10px;
-  border: 1px solid #808080;
+  border: 1px solid var(--wht);
 }
 .react-switch-handle div {
   display: flex !important;
@@ -120,7 +136,7 @@ main {
 }
 
 .ft_sm_inn {
-  color: var(--txt);
+  color: var(--wht);
   height: 100%;
   display: flex;
   width: 90vw;
@@ -136,9 +152,10 @@ main {
   align-items: center;
   flex-direction: column;
 }
-.ft_sm_li:active,
-.ft_sm_li:focus {
+.ft_sm_li a:active,
+.ft_sm_li a:focus {
   border: none;
+  outline: none;
 }
 
 .ft_sm_li i {

@@ -24,7 +24,7 @@ const Toggle = ({ darkTheme }) => {
       offColor="transparent"
       onColor="transparent"
       offHandleColor="#2958ff"
-      onHandleColor="#fff"
+      onHandleColor="#222"
       height={16}
       width={46}
       borderRadius={50}

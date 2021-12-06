@@ -12,15 +12,17 @@ const TopNavigationBar = ({ darkTheme }) => {
           dispatch({ type: "modal_menu" });
         }}
       >
-        <i
-          style={{
-            fontSize: "20px",
-            paddingBottom: "2px",
-            marginRight: "10px",
-          }}
-          className="uil uil-bars"
-        />
-        menu
+        <p>
+          <i
+            style={{
+              fontSize: "20px",
+              paddingBottom: "2px",
+              marginRight: "10px",
+            }}
+            className="uil uil-bars"
+          />
+        </p>
+        <p style={{ paddingBottom: "2px" }}>menu</p>
       </div>
       <div className="theme_tog">
         <Toggle darkTheme={darkTheme} />

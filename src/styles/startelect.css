@@ -27,13 +27,16 @@
   font-family: "Barlow", sans-serif;
 }
 
+.light_theme .stt_hd {
+  font-weight: 500;
+}
+
 .on_elt {
   width: 100%;
   min-height: 100px;
 
   max-height: 40vh;
   max-height: calc((var(--list_h) * 3) + 30px);
-  max-height: calc((var(--list_h) * 3) + 0px);
   overflow-y: scroll;
 
   border-radius: 8px;
