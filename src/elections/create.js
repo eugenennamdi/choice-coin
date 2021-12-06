@@ -355,8 +355,8 @@ const CreateElection = () => {
           {items?.map((item) => (
             <div className="item_list">
               <div className="item_list_img">
-                {item?.img ? (
-                  <img src={item?.img} alt="" />
+                {item?.image ? (
+                  <img src={item?.image} alt="" />
                 ) : (
                   <i className="uil uil-asterisk" />
                 )}
