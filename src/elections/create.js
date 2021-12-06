@@ -5,9 +5,6 @@ const CreateElection = () => {
   const [items, setitems] = useState([]);
 
   const [itemInp, setItemInp] = useState("");
-  const [escMnem, setEscMnem] = useState("");
-  const [escAddr, setEscAddr] = useState("");
-  const [adminKey, setAdminKey] = useState("");
   const [processTit, setProcessTit] = useState("");
 
   const hdImgPicker = useRef(null);
@@ -38,7 +35,7 @@ const CreateElection = () => {
   };
 
   const addItem = () => {
-    if (itemInp.trim().length > 2 && !items.includes(itemInp)) {
+    if (itemInp.trim().length > 0 && !items.includes(itemInp)) {
       setitems((prev) => [
         ...prev,
         { name: itemInp, img: itemImg ? itemImg : "" },
@@ -55,14 +52,12 @@ const CreateElection = () => {
 
   // Create Election Function
   const createElection = () => {
+    if (processTit.trim().length < 1) return;
     //
 
     const electionData = {
       headerImage: hdImg ? hdImg : "",
       candidates: items,
-      escMnem,
-      escAddr,
-      adminKey,
       processTit,
     };
 
@@ -73,9 +68,6 @@ const CreateElection = () => {
     setitems([]);
     setHdImg(null);
     setItemInp("");
-    setEscMnem("");
-    setEscAddr("");
-    setAdminKey("");
     setProcessTit("");
 
     // Can redirect here
@@ -123,17 +115,9 @@ const CreateElection = () => {
               value={processTit}
               onChange={(e) => setProcessTit(e.target.value)}
             />
-          </div>
-          <div className="v_inp_cov inpCont_cand">
-            <p className="inp_tit">
-              <i className="uil uil-keyhole-circle"></i> Administrative key
+            <p className="ensure_txt">
+              Entries must be of minimum length of two.
             </p>
-            <input
-              type="text"
-              placeholder="Your administrative key here..."
-              value={adminKey}
-              onChange={(e) => setAdminKey(e.target.value)}
-            />
           </div>
           {/* ************** */}
           <div className="v_inp_cov inpCont_cand">
@@ -171,7 +155,7 @@ const CreateElection = () => {
                 </div>
               </div>
               <p className="ensure_txt">
-                Entries must be of minimum length of three(3)
+                Entries must be of minimum length of two.
               </p>
             </div>
 
@@ -201,30 +185,6 @@ const CreateElection = () => {
           ))}
 
           <br />
-
-          <div className="v_inp_cov inpCont_full">
-            <p className="inp_tit">Escrow Address</p>
-            <input
-              type="text"
-              placeholder="GHUHJJc351155C80aCD043BD5F8FE7ffc8536af1fF9375"
-              value={escAddr}
-              onChange={(e) => setEscAddr(e.target.value)}
-            />
-            <p className="ensure_txt">
-              Please ensure you're already opted in to Choice Coin. Minimum of
-              800 CHOICE
-            </p>
-          </div>
-
-          <div className="v_inp_cov inpCont_full">
-            <p className="inp_tit">Escrow Mnemonics</p>
-            <input
-              type="text"
-              placeholder="fire water make glue hunter"
-              value={escMnem}
-              onChange={(e) => setEscMnem(e.target.value)}
-            />
-          </div>
 
           <div className="crt_butt">
             <button onClick={createElection}>Create Election</button>
