@@ -190,7 +190,8 @@
 }
 @media (max-width: 760px) {
   .ft_inn ul li a p {
-    display: none;
+    width: 0px;
+    overflow: hidden;
   }
   .ft_cont {
     font-size: 13px;

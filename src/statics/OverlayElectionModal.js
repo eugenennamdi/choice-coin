@@ -7,8 +7,6 @@ const OverlayElectionModal = () => {
     (state) => state.status.electModal
   );
 
-  console.log(modalData);
-
   return (
     modalData && (
       <div

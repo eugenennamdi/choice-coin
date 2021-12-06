@@ -1,7 +1,9 @@
-import $ from "jquery";
-import _ from "lodash";
-import Chart from "../components/Chart";
 import "../styles/electionlist.css";
+import loadable from "@loadable/component";
+
+const $ = loadable.lib(() => import("jquery"));
+const _ = loadable.lib(() => import("lodash"));
+const Chart = loadable(() => import("../components/Chart"));
 
 const ElectionList = () => {
   return (

@@ -29,7 +29,7 @@ const StartElection = () => {
                   <p className="e_det_sub">{`${item.elect_desc}`}</p>
                 </div>
                 <div className="pop_butt">
-                  <i class="uil uil-ellipsis-v"></i>
+                  <i className="uil uil-ellipsis-v"></i>
                 </div>
               </li>
             );
@@ -45,7 +45,7 @@ const StartElection = () => {
             flexDirection: "column",
           }}
         >
-          <i class="uil uil-arrow-break"></i>
+          <i className="uil uil-arrow-break"></i>
         </div>
 
         <div className="stt_hd">do any of the following</div>

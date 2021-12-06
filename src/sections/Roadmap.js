@@ -1,11 +1,12 @@
 import "../styles/roadmap.css";
-import ArrowDown from "../components/ArrowDown";
-import { useWindowSize } from "@react-hook/window-size/throttled";
-import ScrollText from "../components/ScrollText";
+import loadable from "@loadable/component";
+import { useWindowSize } from "@react-hook/window-size";
+const ArrowDown = loadable(() => import("../components/ArrowDown"));
+const ScrollText = loadable(() => import("../components/ScrollText"));
 
 const Roadmap = () => {
   const br_point = 800;
-  const [width, height] = useWindowSize();
+  const [width] = useWindowSize();
 
   return (
     <div className="roadmap">
