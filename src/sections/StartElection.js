@@ -53,6 +53,7 @@ const StartElection = () => {
                   </div>
                   <div className="elt_det">
                     <p className="e_det_main">{`${item.title}`}</p>
+                    <p className="e_det_sub">{`${item.description}`}</p>
                   </div>
                   <div className="pop_butt">
                     <i className="uil uil-ellipsis-v"></i>

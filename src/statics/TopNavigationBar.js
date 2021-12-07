@@ -7,25 +7,41 @@ const TopNavigationBar = ({ darkTheme }) => {
   return (
     <header className="small_header">
       <div
-        className="sm_act_menu_butt"
-        onClick={() => {
-          dispatch({ type: "modal_menu" });
+        style={{
+          marginLeft: "6vw",
+          // width: "20px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textTransform: "uppercase",
         }}
       >
-        <p>
-          <i
-            style={{
-              fontSize: "20px",
-              paddingBottom: "2px",
-              marginRight: "10px",
-            }}
-            className="uil uil-bars"
-          />
-        </p>
-        <p style={{ paddingBottom: "2px" }}>menu</p>
+        {/* <img src="" alt="" /> */}
+        Choice Coin
       </div>
-      <div className="theme_tog">
-        <Toggle darkTheme={darkTheme} />
+
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          className="sm_act_menu_butt"
+          onClick={() => {
+            dispatch({ type: "modal_menu" });
+          }}
+        >
+          <p>
+            <i
+              style={{
+                fontSize: "20px",
+                paddingBottom: "2px",
+                marginRight: "10px",
+              }}
+              className="uil uil-bars"
+            />
+          </p>
+          <p style={{ paddingBottom: "2px" }}>menu</p>
+        </div>
+        <div className="theme_tog">
+          <Toggle darkTheme={darkTheme} />
+        </div>
       </div>
     </header>
   );
