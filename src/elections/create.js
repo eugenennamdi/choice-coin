@@ -144,9 +144,6 @@ const CreateElection = () => {
     // choice coin asset ID
     const assetIndex = 21364625;
 
-    // array to store txn object
-    const txnsArray = [];
-
     // amount of CHoice to send. `0` for Opt In
     const amount = 0;
 
@@ -166,37 +163,13 @@ const CreateElection = () => {
         algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
           transactionOptions
         );
-      txnsArray.push(txn);
-    }
 
-    // get the group ID and assign to all transactions
-    const groupID = algosdk.computeGroupID(txnsArray);
-    for (let i = 0; i < txnsArray.length; i++) txnsArray[i].group = groupID;
-
-    // sign txns based on the wallet used to login
-    if (walletType === "algosigner") {
-      const signedTxns = await window.AlgoSigner.signTxn(
-        txnsArray.map((txn) => ({
-          txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
-        }))
-      );
-      // send the transactions to the net.
-      await algodClient
-        .sendRawTransaction(
-          signedTxns.map((txn) =>
-            window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
-          )
-        )
-        .do();
-    } else if (walletType === "my-algo") {
-      const signedTxns = await myAlgoWallet.signTransaction(
-        txnsArray.map((txn) => txn.toByte())
+      const signedTxn = txn.signTxn(
+        algosdk.mnemonicToSecretKey(candidate.private_key)
       );
 
       // send the transactions to the net.
-      await algodClient
-        .sendRawTransaction(signedTxns.map((txn) => txn.blob))
-        .do();
+      await algodClient.sendRawTransaction(signedTxn.blob).do();
     }
   };
 
