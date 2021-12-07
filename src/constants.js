@@ -1,6 +1,5 @@
-const URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "http://choice-coin-api.herokuapp.com";
+const URL = process.env.NETLIFY
+  ? "http://choice-coin-api.herokuapp.com"
+  : "http://localhost:5000";
 
 export { URL };
