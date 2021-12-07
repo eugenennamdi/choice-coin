@@ -1,8 +1,6 @@
 import { useState } from "react";
+import Switch from "react-switch";
 import { useDispatch } from "react-redux";
-import loadable from "@loadable/component";
-
-const Switch = loadable.lib(() => import("react-switch"));
 
 const Toggle = ({ darkTheme }) => {
   const dispatch = useDispatch();
@@ -31,7 +29,7 @@ const Toggle = ({ darkTheme }) => {
         handleDiameter={12}
         offColor="#1a1a1a"
         onColor="#eee"
-        offHandleColor="#2958ff"
+        offHandleColor="#0038ff"
         onHandleColor="#222"
         height={16}
         width={46}

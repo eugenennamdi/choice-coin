@@ -4,6 +4,7 @@ import Faq from "./faq";
 import Home from "./Home";
 import Elections from "./elections";
 import Participate from "./participate";
+import Transfer from "./transfer";
 import CreateElection from "./elections/create";
 
 import TopNavigationBar from "./statics/TopNavigationBar";
@@ -25,6 +26,7 @@ const MainPage = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/elections" element={<Elections />} />
+        <Route path="/transfer" element={<Transfer />} />
         <Route path="/elections/create" element={<CreateElection />} />
         <Route path="/participate" element={<Participate />} />
         <Route path="/faq" element={<Faq />} />

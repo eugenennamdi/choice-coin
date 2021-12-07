@@ -1,3 +1,4 @@
+import $ from "jquery";
 import "../styles/faq.css";
 
 const Faq = () => {
@@ -27,17 +28,25 @@ const Faq = () => {
             que: " About Algorand",
             ans: "Algorand is a blockchain-based cryptocurrency platform that aims to be secure, scalable, and decentralized. The Algorand platform supports smart contract functionality, and its consensus algorithm is based on proof-of-stake principles and a Byzantine Agreement protocol. Algorand's native cryptocurrency is called Algo.",
           },
-        ].map((item, index) => (
+        ].map((item) => (
           <div className="collap_cov">
             <button
               className="collapsible"
               onClick={(e) => {
-                e.target.classList.toggle("colap_active");
-                var content = e.target.nextElementSibling;
-                if (content.style.maxHeight) {
-                  content.style.maxHeight = null;
+                $(e.target).toggleClass("colap_active");
+
+                var content = $(e.target)
+                  .closest(".collap_cov")
+                  .find(".collap_cont");
+
+                if (!!content.height()) {
+                  content.css({
+                    maxHeight: "0px",
+                  });
                 } else {
-                  content.style.maxHeight = content.scrollHeight + "px";
+                  content.css({
+                    maxHeight: content.get(0).scrollHeight + "px",
+                  });
                 }
               }}
             >
