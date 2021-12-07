@@ -163,13 +163,12 @@ const CreateElection = () => {
         algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
           transactionOptions
         );
-
-      const signedTxn = txn.signTxn(
-        algosdk.mnemonicToSecretKey(candidate.private_key)
-      );
+        
+      const { _, sk } = algosdk.mnemonicToSecretKey(candidate.private_key);
+      const signedTxn = txn.signTxn(sk);
 
       // send the transactions to the net.
-      await algodClient.sendRawTransaction(signedTxn.blob).do();
+      await algodClient.sendRawTransaction(signedTxn).do();
     }
   };
 
