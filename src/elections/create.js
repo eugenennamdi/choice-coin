@@ -26,6 +26,9 @@ const CreateElection = () => {
 
   const [itemInp, setItemInp] = useState("");
   const [processTit, setProcessTit] = useState("");
+  const [electionDescription, setElectionDesciption] = useState("");
+
+  const [choiceToSend, setChoiceToSend] = useState(1);
 
   const hdImgPicker = useRef(null);
   const itemImgPicker = useRef(null);
@@ -194,6 +197,8 @@ const CreateElection = () => {
       process_image: hdImg ? hdImg : "",
       candidates: items,
       processTit,
+      electionDescription,
+      choiceToSend,
     };
 
     // create candidates address and secretKey
@@ -203,33 +208,35 @@ const CreateElection = () => {
       // this should not show while `topUpCandidates` is still running
       console.log("ToPPED UP");
       if (continueExecution) {
-        optinCandidates(updatedCandidates);
+        optinCandidates(updatedCandidates).then(() => {
+          const headers = {
+            "X-Wallet-Address": walletAddress,
+          };
+          // add choice per vote input
+          axios
+            .post(
+              `${URL}/elections/create`,
+              {
+                candidates: updatedCandidates,
+                choice_per_vote: electionData.choiceToSend,
+                process_image: electionData.process_image,
+                title: electionData.processTit,
+                description: electionData.electionDescription,
+              },
+              { headers }
+            )
+            .then((response) => alert(response.data.message));
+        });
       }
     });
 
-    const headers = {
-      "X-Wallet-Address": walletAddress,
-    };
-
-    // add choice per vote input
-    axios
-      .post(
-        `${URL}/elections/create`,
-        {
-          candidates: updatedCandidates,
-          choice_per_vote: 1,
-          process_image: electionData.process_image,
-          title: electionData.processTit,
-        },
-        { headers }
-      )
-      .then((response) => alert(response.data.message));
-
     // Reset Inputs
-    setitems([]);
-    setHdImg(null);
-    setItemInp("");
-    setProcessTit("");
+    // setitems([]);
+    // setHdImg(null);
+    // setItemInp("");
+    // setProcessTit("");
+    // setChoiceToSend(0);
+    // setElectionDesciption("");
 
     // Can redirect here
   };
@@ -269,17 +276,44 @@ const CreateElection = () => {
           </div>
 
           <div className="v_inp_cov inpCont_cand">
-            <p className="inp_tit">Process Title</p>
+            <p className="inp_tit">Election Title</p>
             <input
               type="text"
-              placeholder="Best cryptocurrency"
+              placeholder="eg. Best cryptocurrency"
               value={processTit}
               onChange={(e) => setProcessTit(e.target.value)}
             />
             <p className="ensure_txt">
-              Entries must be of minimum length of two.
+              Entries must be of minimum length of one.
             </p>
           </div>
+
+          <div className="v_inp_cov inpCont_cand">
+            <p className="inp_tit">Election Description</p>
+            <input
+              type="text"
+              placeholder="Describe process"
+              value={electionDescription}
+              onChange={(e) => setElectionDesciption(e.target.value)}
+            />
+            <p className="ensure_txt">
+              A meaningful text to describe your election process.
+            </p>
+          </div>
+
+          <div className="v_inp_cov inpCont_cand">
+            <p className="inp_tit">Choice per vote</p>
+            <input
+              type="number"
+              value={choiceToSend}
+              min="1"
+              onChange={(e) => setChoiceToSend(e.target.value)}
+            />
+            <p className="ensure_txt">
+              Amount of $CHOICE required to participate in this election
+            </p>
+          </div>
+
           {/* ************** */}
           <div className="v_inp_cov inpCont_cand">
             <p className="inp_tit">Candidates</p>
@@ -316,7 +350,7 @@ const CreateElection = () => {
                 </div>
               </div>
               <p className="ensure_txt">
-                Entries must be of minimum length of two.
+                Entries must be of minimum length of one.
               </p>
             </div>
 

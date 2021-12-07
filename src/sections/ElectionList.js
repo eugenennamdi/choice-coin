@@ -33,7 +33,7 @@ const ElectionList = () => {
 
             const totalScore = _.sum(scores);
             return (
-              <div className="card_cont">
+              <div className="card_cont" key={index}>
                 <div className="card_r1">
                   <div className="card_elt_img">
                     <img src={slug.process_image} alt="" />
@@ -79,7 +79,7 @@ const ElectionList = () => {
                     <ul className="vote_now_list">
                       {slug?.candidates?.map((item, index) => {
                         return (
-                          <li>
+                          <li key={index}>
                             <input
                               type="radio"
                               name="options"

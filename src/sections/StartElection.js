@@ -4,16 +4,19 @@ import { URL } from "../constants";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const StartElection = () => {
   // wallet-type & address
   const walletAddress = localStorage.getItem("address");
 
   const headers = { "X-Wallet-Address": walletAddress };
+  const [myData, setMyData] = useState([]);
 
   const { isLoading, error, data } = useQuery("elections", () => {
     if (walletAddress) {
-      axios.get(`${URL}/elections`, { headers }).then((response) => {
+      axios.get(`${URL}/elections/mine`, { headers }).then((response) => {
+        setMyData(response.data.data);
         return response.data;
       });
     } else {
@@ -35,8 +38,8 @@ const StartElection = () => {
         <div className="stt_hd">Recently Created Elections</div>
 
         <ul className="on_elt">
-          {!!data ? (
-            data?.map((item, index) => {
+          {!!(myData.length > 0) ? (
+            myData?.map((item, index) => {
               return (
                 <li
                   key={`${index}`}
