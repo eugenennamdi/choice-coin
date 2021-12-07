@@ -12,6 +12,8 @@ const ElectionList = () => {
   const { isLoading, error, data } = useQuery("elections", () =>
     axios.get(`${URL}/elections`).then((response) => response.data.data)
   );
+
+  const placeVote = () => {};
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
@@ -78,7 +80,11 @@ const ElectionList = () => {
                       {slug?.candidates?.map((item, index) => {
                         return (
                           <li>
-                            <input type="radio" name="options" />
+                            <input
+                              type="radio"
+                              name="options"
+                              value={item.address}
+                            />
 
                             <div className="vote_img_cont">
                               {!!item.image ? (
@@ -94,7 +100,9 @@ const ElectionList = () => {
                     </ul>
 
                     <div className="rec_vote_cont">
-                      <button className="record_vote">Submit vote</button>
+                      <button className="record_vote" onClick={placeVote}>
+                        Submit vote
+                      </button>
                     </div>
                   </div>
 

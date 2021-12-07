@@ -17,7 +17,7 @@ const BottomNavigationBar = ({ NavLink }) => {
             to={`/`}
             key={"home"}
           >
-            <i class="uil uil-estate"></i>
+            <i className="uil uil-estate"></i>
             {/* <p> Home</p> */}
           </NavLink>
         </li>
@@ -36,7 +36,7 @@ const BottomNavigationBar = ({ NavLink }) => {
             to={`/elections`}
             key={"elections"}
           >
-            <i class="uil uil-plus-square"></i>
+            <i className="uil uil-plus-square"></i>
             {/* <p> Elections</p> */}
           </NavLink>
         </li>
@@ -67,7 +67,7 @@ const BottomNavigationBar = ({ NavLink }) => {
             to={`/transfer`}
             key={"transfer"}
           >
-            <i class="uil uil-exchange"></i>
+            <i className="uil uil-exchange"></i>
           </NavLink>
         </li>
 
@@ -86,7 +86,7 @@ const BottomNavigationBar = ({ NavLink }) => {
             to={`/participate`}
             key={"participate"}
           >
-            <i class="uil uil-check-square"></i>
+            <i className="uil uil-check-square"></i>
             {/* <p>Participate</p> */}
           </NavLink>
         </li>
@@ -105,7 +105,10 @@ const BottomNavigationBar = ({ NavLink }) => {
             to={`/faq`}
             key={"faq"}
           >
-            <i class="uil uil-shield-question" style={{ fontSize: "21px" }}></i>
+            <i
+              className="uil uil-shield-question"
+              style={{ fontSize: "21px" }}
+            ></i>
             {/* <p>FAQ</p> */}
           </NavLink>
         </li>

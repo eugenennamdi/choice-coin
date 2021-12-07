@@ -13,9 +13,11 @@ const StartElection = () => {
 
   const { isLoading, error, data } = useQuery("elections", () => {
     if (walletAddress) {
-      axios
-        .get(`${URL}/elections/mine`, { headers })
-        .then((response) => response.data.data);
+      axios.get(`${URL}/elections`, { headers }).then((response) => {
+        return response.data;
+      });
+    } else {
+      return null;
     }
   });
 
@@ -24,6 +26,7 @@ const StartElection = () => {
   const dispatch = useDispatch();
 
   if (isLoading) return <></>;
+
   if (error) return console.log("An error has occurred: " + error?.message);
 
   return (

@@ -1,9 +1,62 @@
 import "../styles/transfer.css";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import algosdk from "algosdk";
+import MyAlgoConnect from "@randlabs/myalgo-connect";
 
 const Index = () => {
   const [amount, setAmount] = useState(0);
   const [addr, setAddr] = useState("");
+
+  const [balance, setBalance] = useState("0.0000000");
+
+  const dispatch = useDispatch();
+
+  // algod Client
+  const algodClient = new algosdk.Algodv2(
+    {
+      "X-API-Key": "Xy8NsXxfJg2cQ2YQ4pax6aLrTcj55jZ9mbsNCM30 ",
+    },
+    "https://testnet-algorand.api.purestake.io/ps2",
+    ""
+  );
+
+  const myAlgoWallet = new MyAlgoConnect();
+
+  // wallet-type & address
+  const walletType = localStorage.getItem("wallet-type");
+  const walletAddress = localStorage.getItem("address");
+
+  const makeTransfer = async () => {
+    console.log("HEY");
+    // check if localStorage items were deleted.
+    if (!walletType || !walletAddress) {
+      dispatch({ type: "modal_connect" });
+      return;
+    }
+
+    const myAccountInfo = await algodClient
+      .accountInformation(walletAddress)
+      .do();
+
+    // const receiverAccountInfo = await algodClient.accountInformation(addr).do();
+
+    if (myAccountInfo.assets.length === 0) {
+      alert("You need to optin to Choice Coin");
+      return;
+    }
+
+    // if (receiverAccountInfo.assets.length === 0) {
+    //   alert("The receipient is not opt in to Choice.");
+    //   return;
+    // }
+
+    console.log(myAccountInfo.assets);
+  };
+
+  const setMaxBalance = () => {
+    setAmount(balance);
+  };
 
   return (
     <div className="transfer_cont">
@@ -21,7 +74,7 @@ const Index = () => {
               />
 
               <div className="trsf_max">
-                <p>Max</p>
+                <button onClick={setMaxBalance}>Max</button>
               </div>
             </div>
           </div>
@@ -31,10 +84,8 @@ const Index = () => {
               width: "30px",
               height: "30px",
               display: "flex",
-              display: "flex",
               fontSize: "17px",
               borderRadius: "100%",
-              alignItems: "center",
               alignItems: "center",
               margin: "10px 0px",
               flexDirection: "column",
@@ -57,7 +108,9 @@ const Index = () => {
             />
           </div>
 
-          <button className="submitTrsf">Transfer Assets</button>
+          <button className="submitTrsf" onClick={makeTransfer}>
+            Transfer Assets
+          </button>
 
           {/*  */}
         </div>

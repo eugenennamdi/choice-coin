@@ -163,7 +163,7 @@ const CreateElection = () => {
         algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
           transactionOptions
         );
-        
+
       const { _, sk } = algosdk.mnemonicToSecretKey(candidate.private_key);
       const signedTxn = txn.signTxn(sk);
 
@@ -223,7 +223,7 @@ const CreateElection = () => {
         },
         { headers }
       )
-      .then((response) => alert(response.data));
+      .then((response) => alert(response.data.message));
 
     // Reset Inputs
     setitems([]);
