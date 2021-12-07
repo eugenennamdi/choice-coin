@@ -1,9 +1,9 @@
+import axios from "axios";
 import "../styles/startelect.css";
+import { URL } from "../constants";
+import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { URL } from "../constants";
 
 const StartElection = () => {
   // wallet-type & address
@@ -11,23 +11,20 @@ const StartElection = () => {
 
   const headers = { "X-Wallet-Address": walletAddress };
 
-  const { isLoading, error, data } = useQuery("elections", () =>
-    axios
-      .get(`${URL}/elections/mine`, { headers })
-      .then((response) => response.data.data)
-  );
+  const { isLoading, error, data } = useQuery("elections", () => {
+    if (walletAddress) {
+      axios
+        .get(`${URL}/elections/mine`, { headers })
+        .then((response) => response.data.data);
+    }
+  });
+
   const isWalletConnected =
     localStorage.getItem("wallet-type") === null ? false : true;
   const dispatch = useDispatch();
 
-  if (!isWalletConnected) {
-    dispatch({ type: "modal_connect" });
-    return;
-  }
-
-  if (isLoading) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
+  if (isLoading) return <></>;
+  if (error) return console.log("An error has occurred: " + error?.message);
 
   return (
     <div className="stt_elt">
@@ -35,27 +32,52 @@ const StartElection = () => {
         <div className="stt_hd">Recently Created Elections</div>
 
         <ul className="on_elt">
-          {data?.map((item, index) => {
-            return (
-              <li
-                key={`${index}`}
-                className="elt_item"
-                onClick={() =>
-                  dispatch({ type: "popupElection", payload: item })
-                }
+          {!!data ? (
+            data?.map((item, index) => {
+              return (
+                <li
+                  key={`${index}`}
+                  className="elt_item"
+                  onClick={() =>
+                    dispatch({ type: "popupElection", payload: item })
+                  }
+                >
+                  <div className="elt_img_cont">
+                    <img src={item.process_image} alt="" />
+                  </div>
+                  <div className="elt_det">
+                    <p className="e_det_main">{`${item.title}`}</p>
+                  </div>
+                  <div className="pop_butt">
+                    <i className="uil uil-ellipsis-v"></i>
+                  </div>
+                </li>
+              );
+            })
+          ) : (
+            <>
+              <div
+                style={{
+                  flex: 1,
+                  opacity: 0.7,
+                  width: "100%",
+                  display: "flex",
+                  fontSize: "14px",
+                  color: "var(--wht)",
+                  letterSpacing: "1px",
+                  alignItems: "center",
+                  padding: "10px 20px",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  textTransform: "uppercase",
+                }}
               >
-                <div className="elt_img_cont">
-                  <img src={item.process_image} alt="" />
-                </div>
-                <div className="elt_det">
-                  <p className="e_det_main">{`${item.title}`}</p>
-                </div>
-                <div className="pop_butt">
-                  <i className="uil uil-ellipsis-v"></i>
-                </div>
-              </li>
-            );
-          })}
+                <p style={{ lineHeight: "20px" }}>
+                  Your Elections are displayed here once you connect your wallet
+                </p>
+              </div>
+            </>
+          )}
         </ul>
 
         <div
@@ -74,9 +96,14 @@ const StartElection = () => {
         <div className="create_elect">
           {
             // If Wallet is connected this would be true
-            isWalletConnected ? (
+            !!isWalletConnected ? (
               <NavLink
-                style={{ width: "100%", height: "100%", textAlign: "center" }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  textAlign: "center",
+                  cursor: "pointer",
+                }}
                 to={`./create`}
                 key={"create"}
               >
@@ -84,8 +111,15 @@ const StartElection = () => {
               </NavLink>
             ) : (
               <div
-                style={{ width: "100%", height: "100%", textAlign: "center" }}
-                onClick={() => dispatch({ type: "modal_connect" })}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  textAlign: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  dispatch({ type: "modal_connect" });
+                }}
               >
                 Create New Election
               </div>

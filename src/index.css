@@ -253,15 +253,16 @@ main {
   top: calc(var(--sm-hd-height));
 }
 
-.connet_butt {
+.connect_butt {
   display: flex;
   padding: 25px 0px;
   align-items: center;
   flex-direction: row;
   margin: 10px 0px;
+  cursor: pointer;
   border-bottom: 1px solid var(--l1);
 }
-.connet_butt:nth-child(3) {
+.connect_butt:nth-child(3) {
   margin-bottom: 20px;
   border-bottom: none;
 }

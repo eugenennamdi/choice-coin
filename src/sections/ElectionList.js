@@ -23,7 +23,7 @@ const ElectionList = () => {
           <p>Participate in Ongoing Elections</p>
         </div>
         <ul className="card_list">
-          {data.map((slug, index) => {
+          {data?.map((slug, index) => {
             const scores = slug?.candidates.map((data) =>
               data?.votes ? data?.votes : 0
             );

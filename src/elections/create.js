@@ -107,29 +107,37 @@ const CreateElection = () => {
     for (let i = 0; i < txns.length; i++) txns[i].group = groupID;
 
     // sign txns based on the wallet used to login
-    if (walletType === "algosigner") {
-      const signedTxns = await window.AlgoSigner.signTxn(
-        txns.map((txn) => ({
-          txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
-        }))
-      );
-      const ids = await algodClient
-        .sendRawTransaction(
-          signedTxns.map((txn) =>
-            window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
+    let continueExecution = true;
+    try {
+      if (walletType === "algosigner") {
+        const signedTxns = await window.AlgoSigner.signTxn(
+          txns.map((txn) => ({
+            txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
+          }))
+        );
+        await algodClient
+          .sendRawTransaction(
+            signedTxns.map((txn) =>
+              window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
+            )
           )
-        )
-        .do();
-    } else if (walletType === "my-algo") {
-      const signedTxns = await myAlgoWallet.signTransaction(
-        txns.map((txn) => txn.toByte())
-      );
+          .do();
+      } else if (walletType === "my-algo") {
+        const signedTxns = await myAlgoWallet.signTransaction(
+          txns.map((txn) => txn.toByte())
+        );
 
-      // send the transactions to the net.
-      const ids = await algodClient
-        .sendRawTransaction(signedTxns.map((txn) => txn.blob))
-        .do();
+        // send the transactions to the net.
+        await algodClient
+          .sendRawTransaction(signedTxns.map((txn) => txn.blob))
+          .do();
+      }
+    } catch (error) {
+      console.log(error);
+      continueExecution = false;
     }
+
+    return continueExecution;
   };
 
   const optinCandidates = async (candidates) => {
@@ -173,7 +181,7 @@ const CreateElection = () => {
         }))
       );
       // send the transactions to the net.
-      const ids = await algodClient
+      await algodClient
         .sendRawTransaction(
           signedTxns.map((txn) =>
             window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
@@ -186,7 +194,7 @@ const CreateElection = () => {
       );
 
       // send the transactions to the net.
-      const ids = await algodClient
+      await algodClient
         .sendRawTransaction(signedTxns.map((txn) => txn.blob))
         .do();
     }
@@ -205,6 +213,11 @@ const CreateElection = () => {
       return;
     }
 
+    if (items.length < 2) {
+      alert("Minimum of two candidates required!");
+      return;
+    }
+
     const electionData = {
       process_image: hdImg ? hdImg : "",
       candidates: items,
@@ -214,12 +227,13 @@ const CreateElection = () => {
     // create candidates address and secretKey
     const updatedCandidates = createCandidates(electionData.candidates);
 
-    topUpCandidates(updatedCandidates);
-
-    // this should not show while `topUpCandidates` is still running
-    console.log("ToPPED UP");
-
-    optinCandidates(updatedCandidates);
+    topUpCandidates(updatedCandidates).then((continueExecution) => {
+      // this should not show while `topUpCandidates` is still running
+      console.log("ToPPED UP");
+      if (continueExecution) {
+        optinCandidates(updatedCandidates);
+      }
+    });
 
     const headers = {
       "X-Wallet-Address": walletAddress,
@@ -339,8 +353,8 @@ const CreateElection = () => {
             </div>
           </div>
 
-          {items?.map((item) => (
-            <div className="item_list">
+          {items?.map((item, index) => (
+            <div className="item_list" key={index}>
               <div className="item_list_img">
                 {item?.image ? (
                   <img src={item?.image} alt="" />

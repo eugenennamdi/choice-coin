@@ -11,36 +11,46 @@ const PopFromBottomModal = () => {
 
   const myAlgoConnect = async () => {
     const myAlgoWallet = new MyAlgoConnect();
-    const accounts = await myAlgoWallet.connect({
-      shouldSelectOneAccount: true,
-    });
-    const address = accounts[0].address;
 
-    // close modal.
-    localStorage.setItem("wallet-type", "my-algo");
-    localStorage.setItem("address", address);
-
-    dispatch({ type: "close_modal" });
-    window.location.reload();
-  };
-
-  const algoSignerConnect = async () => {
-    if (typeof AlgoSigner === "undefined") {
-      window.open(
-        "https://chrome.google.com/webstore/detail/algosigner/kmmolakhbgdlpkjkcjkebenjheonagdm",
-        "_blank"
-      );
-    } else {
-      await window.AlgoSigner.connect({ ledger: "TestNet" });
-      const accounts = await window.AlgoSigner.accounts({ ledger: "TestNet" });
+    try {
+      const accounts = await myAlgoWallet.connect({
+        shouldSelectOneAccount: true,
+      });
       const address = accounts[0].address;
 
       // close modal.
-      localStorage.setItem("wallet-type", "algosigner");
+      localStorage.setItem("wallet-type", "my-algo");
       localStorage.setItem("address", address);
 
       dispatch({ type: "close_modal" });
       window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const algoSignerConnect = async () => {
+    try {
+      if (typeof window.AlgoSigner === "undefined") {
+        window.open(
+          "https://chrome.google.com/webstore/detail/algosigner/kmmolakhbgdlpkjkcjkebenjheonagdm",
+          "_blank"
+        );
+      } else {
+        const accounts = await window.AlgoSigner.accounts({
+          ledger: "TestNet",
+        });
+        const address = accounts[0].address;
+
+        // close modal.
+        localStorage.setItem("wallet-type", "algosigner");
+        localStorage.setItem("address", address);
+
+        dispatch({ type: "close_modal" });
+        window.location.reload();
+      }
+    } catch (error) {
+      alert("An error occured while trying to connect AlgoSigner");
     }
   };
 
@@ -136,7 +146,7 @@ const PopFromBottomModal = () => {
                   Connect Wallet to continue
                 </div>
 
-                <div className="connet_butt" onClick={myAlgoConnect}>
+                <div className="connect_butt" onClick={myAlgoConnect}>
                   <div className="connect_wallet_img">
                     <img
                       src="https://i.postimg.cc/76r9kXSr/My-Algo-Logo-4c21daa4.png"
@@ -145,7 +155,7 @@ const PopFromBottomModal = () => {
                   </div>
                   <p className="connect_wallet_txt">My Algo Wallet</p>
                 </div>
-                <div className="connet_butt" onClick={algoSignerConnect}>
+                <div className="connect_butt" onClick={algoSignerConnect}>
                   <div className="connect_wallet_img">
                     <img
                       src="https://i.postimg.cc/L4JB4JwT/Algo-Signer-2ec35000.png"
