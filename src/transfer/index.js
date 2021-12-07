@@ -1,14 +1,14 @@
 import "../styles/transfer.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import algosdk from "algosdk";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-
+import { ASSET_ID } from "../constants";
 const Index = () => {
   const [amount, setAmount] = useState(0);
   const [addr, setAddr] = useState("");
 
-  const [balance, setBalance] = useState("0.0000000");
+  const [balance, setBalance] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -39,24 +39,73 @@ const Index = () => {
       .accountInformation(walletAddress)
       .do();
 
-    // const receiverAccountInfo = await algodClient.accountInformation(addr).do();
-
     if (myAccountInfo.assets.length === 0) {
       alert("You need to optin to Choice Coin");
       return;
     }
 
-    // if (receiverAccountInfo.assets.length === 0) {
-    //   alert("The receipient is not opt in to Choice.");
-    //   return;
-    // }
+    // const receiverAccountInfo = await algodClient.accountInformation(addr).do();
 
-    console.log(myAccountInfo.assets);
+    // compare amount to send with user balance
+    if (amount > balance) {
+      alert("You do not have sufficient balance to make this transaction.");
+      return;
+    }
+
+    // send choice to wallet
+    const suggestedParams = await algodClient.getTransactionParams().do();
+    const transactionOptions = {
+      from: walletAddress,
+      to: addr,
+      closeRemainderTo: undefined,
+      revocationTarget: undefined,
+      amount,
+      ASSET_ID,
+      suggestedParams,
+    };
+    const txn =
+      algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
+        transactionOptions
+      );
+
+    // based on wallet type
+    if (walletType === "my-algo") {
+      const signedTxn = await myAlgoWallet.signTransaction(txn.toByte());
+      await algodClient.sendRawTransaction(signedTxn.blob).do();
+    } else if (walletType === "algosigner") {
+      const signedTxn = await window.AlgoSigner.signTxn([
+        { txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()) },
+      ]);
+      await algodClient
+        .sendRawTransaction(
+          window.AlgoSigner.encoding.base64ToMsgpack(signedTxn[0].blob)
+        )
+        .do();
+    }
   };
 
   const setMaxBalance = () => {
     setAmount(balance);
   };
+
+  useEffect(() => {
+    const setMyBalance = async () => {
+      const myAccountInfo = await algodClient
+        .accountInformation(walletAddress)
+        .do();
+
+      const b = myAccountInfo.assets
+        ? myAccountInfo.assets.find(
+            (element) => element["asset-id"] === ASSET_ID
+          ).amount
+        : "0.00000";
+
+      setBalance(b);
+    };
+
+    setMyBalance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="transfer_cont">
