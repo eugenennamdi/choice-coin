@@ -1,4 +1,4 @@
-const URL = "https://e455-197-210-29-230.ngrok.io";
+const URL = "http://localhost:5000";
 const ASSET_ID = 21364625;
 
 export { URL, ASSET_ID };
