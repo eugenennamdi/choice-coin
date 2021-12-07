@@ -2,11 +2,28 @@ import data from "../Mock";
 import "../styles/startelect.css";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const StartElection = () => {
+  // wallet-type & address
+  const walletType = localStorage.getItem("wallet-type");
+  const walletAddress = localStorage.getItem("address");
+
+  const headers = { "X-Wallet-Address": walletAddress };
+
+  const { isLoading, error, data } = useQuery("elections", () =>
+    axios
+      .get("http://localhost:5000/elections/mine", { headers })
+      .then((response) => response.data.data)
+  );
   const isWalletConnected =
     localStorage.getItem("wallet-type") === null ? false : true;
   const dispatch = useDispatch();
+
+  if (isLoading) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="stt_elt">
@@ -24,11 +41,10 @@ const StartElection = () => {
                 }
               >
                 <div className="elt_img_cont">
-                  <img src={item.elect_img} alt="" />
+                  <img src={item.process_image} alt="" />
                 </div>
                 <div className="elt_det">
-                  <p className="e_det_main">{`${item.elect_tit}`}</p>
-                  <p className="e_det_sub">{`${item.elect_desc}`}</p>
+                  <p className="e_det_main">{`${item.title}`}</p>
                 </div>
                 <div className="pop_butt">
                   <i className="uil uil-ellipsis-v"></i>

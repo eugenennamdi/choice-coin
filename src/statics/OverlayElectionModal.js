@@ -16,12 +16,12 @@ const OverlayElectionModal = () => {
         <div className="modal_cont">
           <div className="modal_r1">
             <div className="modal_elt_img">
-              <img src={modalData.elect_img} alt="" />
+              <img src={modalData.process_image} alt="" />
             </div>
-            <div className="modal_elt_tit">{modalData.elect_tit}</div>
+            <div className="modal_elt_tit">{modalData.title}</div>
           </div>
 
-          <div className="modal_elt_desc">{modalData.elect_desc}</div>
+          <div className="modal_elt_desc">{modalData.description}</div>
 
           {/*  */}
 
@@ -29,11 +29,11 @@ const OverlayElectionModal = () => {
             <div className="modal_cand_hd">Candidates</div>
 
             <ul className="modal_cand_list">
-              {modalData.elect_cand?.map((item) => (
+              {modalData.candidates?.map((item) => (
                 <li className="cand_item">
                   <div className="cand_img_cont">
-                    {!!item.cand_img ? (
-                      <img src={item.cand_img} alt="" />
+                    {!!item.image ? (
+                      <img src={item.image} alt="" />
                     ) : (
                       <i
                         className="uil uil-asterisk"
@@ -41,7 +41,7 @@ const OverlayElectionModal = () => {
                       ></i>
                     )}
                   </div>
-                  <p className="cand_det">{item.cand_det}</p>
+                  <p className="cand_det">{item.name}</p>
                 </li>
               ))}
             </ul>
