@@ -4,14 +4,13 @@ import "../styles/electionlist.css";
 import loadable from "@loadable/component";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { URL } from "../constants";
 
 const Chart = loadable(() => import("../components/Chart"));
 
 const ElectionList = () => {
   const { isLoading, error, data } = useQuery("elections", () =>
-    axios
-      .get("http://localhost:5000/elections")
-      .then((response) => response.data.data)
+    axios.get(`${URL}/elections`).then((response) => response.data.data)
   );
 
   if (isLoading) return "Loading...";

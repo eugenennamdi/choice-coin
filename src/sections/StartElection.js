@@ -1,20 +1,19 @@
-import data from "../Mock";
 import "../styles/startelect.css";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { URL } from "../constants";
 
 const StartElection = () => {
   // wallet-type & address
-  const walletType = localStorage.getItem("wallet-type");
   const walletAddress = localStorage.getItem("address");
 
   const headers = { "X-Wallet-Address": walletAddress };
 
   const { isLoading, error, data } = useQuery("elections", () =>
     axios
-      .get("http://localhost:5000/elections/mine", { headers })
+      .get(`${URL}/elections/mine`, { headers })
       .then((response) => response.data.data)
   );
   const isWalletConnected =

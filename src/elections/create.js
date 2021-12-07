@@ -4,9 +4,8 @@ import MyAlgoConnect from "@randlabs/myalgo-connect";
 import axios from "axios";
 import algosdk from "algosdk";
 import "../styles/createelection.css";
-
+import { URL } from "../constants";
 const CreateElection = () => {
-  const URL = "http://localhost:5000";
   // algod Client
   const algodClient = new algosdk.Algodv2(
     {
