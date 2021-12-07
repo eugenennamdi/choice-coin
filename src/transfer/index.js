@@ -1,9 +1,10 @@
 import "../styles/transfer.css";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { ASSET_ID } from "../constants";
 import algosdk from "algosdk";
 import MyAlgoConnect from "@randlabs/myalgo-connect";
-import { ASSET_ID } from "../constants";
+
 const Index = () => {
   const [amount, setAmount] = useState(0);
   const [addr, setAddr] = useState("");
@@ -28,7 +29,6 @@ const Index = () => {
   const walletAddress = localStorage.getItem("address");
 
   const makeTransfer = async () => {
-    console.log("HEY");
     // check if localStorage items were deleted.
     if (!walletType || !walletAddress) {
       dispatch({ type: "modal_connect" });
@@ -54,19 +54,16 @@ const Index = () => {
 
     // send choice to wallet
     const suggestedParams = await algodClient.getTransactionParams().do();
-    const transactionOptions = {
+    const amountToSend = amount * 100;
+    // console.log(typeof amountToSend, typeof amount);
+
+    const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
       from: walletAddress,
       to: addr,
-      closeRemainderTo: undefined,
-      revocationTarget: undefined,
-      amount,
-      ASSET_ID,
+      amount: amountToSend,
+      assetIndex: ASSET_ID,
       suggestedParams,
-    };
-    const txn =
-      algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
-        transactionOptions
-      );
+    });
 
     // based on wallet type
     if (walletType === "my-algo") {
@@ -82,6 +79,8 @@ const Index = () => {
         )
         .do();
     }
+
+    alert(`${amount} $CHOICE sent successfully!`);
   };
 
   const setMaxBalance = () => {
@@ -97,7 +96,7 @@ const Index = () => {
       const b = myAccountInfo.assets
         ? myAccountInfo.assets.find(
             (element) => element["asset-id"] === ASSET_ID
-          ).amount
+          ).amount / 100
         : "0.00000";
 
       setBalance(b);
