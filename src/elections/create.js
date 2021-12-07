@@ -90,55 +90,49 @@ const CreateElection = () => {
     const txns = [];
     const AMOUNT = 1000000;
 
-    algodClient
-      .getTransactionParams()
-      .do()
-      .then((suggestedParams) => {
-        for (let candidate of candidates) {
-          const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-            from: walletAddress,
-            to: candidate.address,
-            amount: AMOUNT,
-            suggestedParams,
-          });
-          txns.push(txn);
-        }
+    const suggestedParams = await algodClient.getTransactionParams().do();
 
-        // get the group ID and assign to all transactions
-        const groupID = algosdk.computeGroupID(txns);
-        for (let i = 0; i < txns.length; i++) txns[i].group = groupID;
-
-        // sign txns based on the wallet used to login
-        if (walletType === "algosigner") {
-          window.AlgoSigner.signTxn(
-            txns.map((txn) => ({
-              txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
-            }))
-          ).then((signedTxns) => {
-            algodClient
-              .sendRawTransaction(
-                signedTxns.map((txn) =>
-                  window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
-                )
-              )
-              .do()
-              .then((ids) => console.log(ids));
-          });
-        } else if (walletType === "my-algo") {
-          myAlgoWallet
-            .signTransaction(txns.map((txn) => txn.toByte()))
-            .then((signedTxns) => {
-              // send the transactions to the net.
-              algodClient
-                .sendRawTransaction(signedTxns.map((txn) => txn.blob))
-                .do()
-                .then((ids) => console.log(ids));
-            });
-        }
+    for (let candidate of candidates) {
+      const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+        from: walletAddress,
+        to: candidate.address,
+        amount: AMOUNT,
+        suggestedParams,
       });
+      txns.push(txn);
+    }
+
+    // get the group ID and assign to all transactions
+    const groupID = algosdk.computeGroupID(txns);
+    for (let i = 0; i < txns.length; i++) txns[i].group = groupID;
+
+    // sign txns based on the wallet used to login
+    if (walletType === "algosigner") {
+      const signedTxns = await window.AlgoSigner.signTxn(
+        txns.map((txn) => ({
+          txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
+        }))
+      );
+      const ids = await algodClient
+        .sendRawTransaction(
+          signedTxns.map((txn) =>
+            window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
+          )
+        )
+        .do();
+    } else if (walletType === "my-algo") {
+      const signedTxns = await myAlgoWallet.signTransaction(
+        txns.map((txn) => txn.toByte())
+      );
+
+      // send the transactions to the net.
+      const ids = await algodClient
+        .sendRawTransaction(signedTxns.map((txn) => txn.blob))
+        .do();
+    }
   };
 
-  const optinCandidates = (candidates) => {
+  const optinCandidates = async (candidates) => {
     // choice coin asset ID
     const assetIndex = 21364625;
 
@@ -148,64 +142,64 @@ const CreateElection = () => {
     // amount of CHoice to send. `0` for Opt In
     const amount = 0;
 
-    algodClient
-      .getTransactionParams()
-      .do()
-      .then((suggestedParams) => {
-        for (let candidate of candidates) {
-          const transactionOptions = {
-            from: candidate.address,
-            to: candidate.address,
-            closeRemainderTo: undefined,
-            revocationTarget: undefined,
-            amount,
-            assetIndex,
-            suggestedParams,
-          };
-          const txn =
-            algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
-              transactionOptions
-            );
-          txnsArray.push(txn);
-        }
+    const suggestedParams = await algodClient.getTransactionParams().do();
 
-        // get the group ID and assign to all transactions
-        const groupID = algosdk.computeGroupID(txnsArray);
-        for (let i = 0; i < txnsArray.length; i++) txnsArray[i].group = groupID;
+    for (let candidate of candidates) {
+      const transactionOptions = {
+        from: candidate.address,
+        to: candidate.address,
+        closeRemainderTo: undefined,
+        revocationTarget: undefined,
+        amount,
+        assetIndex,
+        suggestedParams,
+      };
+      const txn =
+        algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject(
+          transactionOptions
+        );
+      txnsArray.push(txn);
+    }
 
-        // sign txns based on the wallet used to login
-        if (walletType === "algosigner") {
-          window.AlgoSigner.signTxn(
-            txnsArray.map((txn) => ({
-              txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
-            }))
-          ).then((signedTxns) => {
-            // send the transactions to the net.
-            algodClient
-              .sendRawTransaction(
-                signedTxns.map((txn) =>
-                  window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
-                )
-              )
-              .do()
-              .then((ids) => console.log(ids));
-          });
-        } else if (walletType === "my-algo") {
-          myAlgoWallet
-            .signTransaction(txnsArray.map((txn) => txn.toByte()))
-            .then((signedTxns) => {
-              // send the transactions to the net.
-              algodClient
-                .sendRawTransaction(signedTxns.map((txn) => txn.blob))
-                .do()
-                .then((ids) => console.log(ids));
-            });
-        }
-      });
+    // get the group ID and assign to all transactions
+    const groupID = algosdk.computeGroupID(txnsArray);
+    for (let i = 0; i < txnsArray.length; i++) txnsArray[i].group = groupID;
+
+    // sign txns based on the wallet used to login
+    if (walletType === "algosigner") {
+      const signedTxns = await window.AlgoSigner.signTxn(
+        txnsArray.map((txn) => ({
+          txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()),
+        }))
+      );
+      // send the transactions to the net.
+      const ids = await algodClient
+        .sendRawTransaction(
+          signedTxns.map((txn) =>
+            window.AlgoSigner.encoding.base64ToMsgpack(txn.blob)
+          )
+        )
+        .do();
+    } else if (walletType === "my-algo") {
+      const signedTxns = await myAlgoWallet.signTransaction(
+        txnsArray.map((txn) => txn.toByte())
+      );
+
+      // send the transactions to the net.
+      const ids = await algodClient
+        .sendRawTransaction(signedTxns.map((txn) => txn.blob))
+        .do();
+    }
   };
 
   // Create Election Function
   const createElection = () => {
+    // check if localStorage items were deleted.
+    if (!walletType || !walletAddress) {
+      dispatch({ type: "modal_connect" });
+      return;
+    }
+
     if (processTit.trim().length < 1) {
       alert("Process Title required!");
       return;
@@ -216,12 +210,6 @@ const CreateElection = () => {
       candidates: items,
       processTit,
     };
-
-    // check if localStorage items were deleted.
-    if (!walletType || !walletAddress) {
-      dispatch({ type: "modal_connect" });
-      return;
-    }
 
     // create candidates address and secretKey
     const updatedCandidates = createCandidates(electionData.candidates);

@@ -1,5 +1,3 @@
-const URL = process.env.NETLIFY
-  ? "http://choice-coin-api.herokuapp.com"
-  : "http://localhost:5000";
+const URL = "http://choice-coin-api.herokuapp.com";
 
 export { URL };
