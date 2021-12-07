@@ -12,7 +12,6 @@ const ElectionList = () => {
   const { isLoading, error, data } = useQuery("elections", () =>
     axios.get(`${URL}/elections`).then((response) => response.data.data)
   );
-  
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;

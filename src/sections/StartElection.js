@@ -20,6 +20,11 @@ const StartElection = () => {
     localStorage.getItem("wallet-type") === null ? false : true;
   const dispatch = useDispatch();
 
+  if (!isWalletConnected) {
+    dispatch({ type: "modal_connect" });
+    return;
+  }
+
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
