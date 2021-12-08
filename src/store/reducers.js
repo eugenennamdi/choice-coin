@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 const status = (
   state = {
-    darkTheme: localStorage.getItem("mode") == "light" ? false : true,
+    darkTheme: localStorage.getItem("mode") === "light" ? false : true,
     modalMenu: { openModal: false, modalType: "menu" },
     electModal: { openElectModal: false, modalData: null },
     voteModal: { openModalVote: false, voteData: null },
