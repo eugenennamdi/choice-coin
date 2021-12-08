@@ -80,7 +80,7 @@ const Index = () => {
         .do();
     }
 
-    alert(`${amount} $CHOICE sent successfully!`);
+    alert(`${amount} $CHOICE sent successfully to ${addr}!`);
   };
 
   const setMaxBalance = () => {
@@ -97,7 +97,7 @@ const Index = () => {
         ? myAccountInfo.assets.find(
             (element) => element["asset-id"] === ASSET_ID
           ).amount / 100
-        : "0.00000";
+        : 0;
 
       setBalance(b);
     };

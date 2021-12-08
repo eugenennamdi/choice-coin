@@ -8,6 +8,9 @@ const MainPage = loadable(() => import("./MainPage"));
 const PopFromBottomModal = loadable(() =>
   import("./statics/PopFromBottomModal")
 );
+const PopFromBottomModalToVote = loadable(() =>
+  import("./statics/PopFromBottomModalToVote")
+);
 const OverlayElectionModal = loadable(() =>
   import("./statics/OverlayElectionModal")
 );
@@ -24,6 +27,7 @@ const App = () => {
             <MainPage />
             <PopFromBottomModal />
             <OverlayElectionModal />
+            <PopFromBottomModalToVote />
           </Router>
         </QueryClientProvider>
       </ReduxProvider>

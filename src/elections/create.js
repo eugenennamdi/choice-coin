@@ -205,8 +205,6 @@ const CreateElection = () => {
     const updatedCandidates = createCandidates(electionData.candidates);
 
     topUpCandidates(updatedCandidates).then((continueExecution) => {
-      // this should not show while `topUpCandidates` is still running
-      console.log("ToPPED UP");
       if (continueExecution) {
         optinCandidates(updatedCandidates).then(() => {
           const headers = {

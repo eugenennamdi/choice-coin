@@ -114,6 +114,9 @@
   margin: 13px 0px;
   flex-wrap: wrap;
   text-transform: uppercase;
+  flex-direction: row;
+  white-space: nowrap;
+  justify-content: space-between;
 }
 
 .card_cand_list {

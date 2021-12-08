@@ -5,15 +5,30 @@ import loadable from "@loadable/component";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { URL } from "../constants";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Chart = loadable(() => import("../components/Chart"));
 
 const ElectionList = () => {
+  const dispatch = useDispatch();
+
   const { isLoading, error, data } = useQuery("elections", () =>
     axios.get(`${URL}/elections`).then((response) => response.data.data)
   );
 
-  const placeVote = () => {};
+  const placeVote = (address, amount, election) => {
+    if (!address) {
+      alert("Select an option to vote!!");
+      return;
+    }
+
+    dispatch({
+      type: "modal_connect_vote",
+      voteData: { address, amount, election },
+    });
+  };
+
   if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
@@ -44,11 +59,14 @@ const ElectionList = () => {
                 <div className="card_elt_desc">{slug?.card_desc}</div>
 
                 <div className="card_cand">
-                  <div className="card_cand_hd">Candidates</div>
+                  <div className="card_cand_hd">
+                    <p>Candidates</p>
+                    <p>Amt:&nbsp;{slug?.choice_per_vote}</p>
+                  </div>
 
                   <ul className="card_cand_list">
-                    {slug?.candidates?.map((item) => (
-                      <li className="cand_item">
+                    {slug?.candidates?.map((item, index) => (
+                      <li className="cand_item" key={index}>
                         <div className="cand_img_cont">
                           {!!item.image ? (
                             <img src={item.image} alt="" />
@@ -64,8 +82,8 @@ const ElectionList = () => {
                   <div className="chart_collap">
                     <Chart scores={scores} options={options} />
                     <ul className="cand_percent">
-                      {slug?.card_cand?.map((item) => (
-                        <li>
+                      {slug?.card_cand?.map((item, index) => (
+                        <li key={index}>
                           {Math.floor((item.cand_score / totalScore) * 100)}
                           %&nbsp;
                           {item.cand_det}
@@ -100,7 +118,20 @@ const ElectionList = () => {
                     </ul>
 
                     <div className="rec_vote_cont">
-                      <button className="record_vote" onClick={placeVote}>
+                      <button
+                        className="record_vote"
+                        onClick={(e) => {
+                          var voteVal = $(e.target)
+                            .closest(".card_cand")
+                            .find(".vote_now_list");
+
+                          placeVote(
+                            $("input[name=options]:checked", voteVal).val(),
+                            slug.choice_per_vote,
+                            slug
+                          );
+                        }}
+                      >
                         Submit vote
                       </button>
                     </div>

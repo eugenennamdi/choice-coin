@@ -1,11 +1,43 @@
 import { useSelector, useDispatch } from "react-redux";
+import { URL } from "../constants";
+import axios from "axios";
 
 const OverlayElectionModal = () => {
   const dispatch = useDispatch();
 
+  const walletAddress = localStorage.getItem("address");
+
   const { openElectModal, modalData } = useSelector(
     (state) => state.status.electModal
   );
+
+  const startElection = () => {
+    const headers = {
+      "X-Wallet-Address": walletAddress,
+    };
+
+    axios
+      .post(`${URL}/elections/${modalData.slug}/start`, null, { headers })
+      .then((response) => alert(response.data.message))
+      .catch((err) => {
+        console.log(err);
+        alert("An error occured while starting election");
+      });
+  };
+
+  const endElection = () => {
+    const headers = {
+      "X-Wallet-Address": walletAddress,
+    };
+
+    axios
+      .post(`${URL}/elections/${modalData.slug}/end`, null, { headers })
+      .then((response) => alert(response.data.message))
+      .catch((err) => {
+        console.log(err);
+        alert("An error occured while ending election");
+      });
+  };
 
   return (
     modalData && (
@@ -47,8 +79,8 @@ const OverlayElectionModal = () => {
             </ul>
 
             <div className="modal_butts">
-              <button>Start Election</button>
-              <button>End Election</button>
+              <button onClick={startElection}>Start Election</button>
+              <button onClick={endElection}>End Election</button>
             </div>
           </div>
         </div>

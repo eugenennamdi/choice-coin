@@ -5,6 +5,7 @@ const status = (
     darkTheme: true,
     modalMenu: { openModal: false, modalType: "menu" },
     electModal: { openElectModal: false, modalData: null },
+    voteModal: { openModalVote: false, voteData: null },
   },
   action
 ) => {
@@ -20,6 +21,15 @@ const status = (
         ...state,
         modalMenu: { openModal: true, modalType: "connectWallet" },
       };
+
+    case "modal_connect_vote":
+      return {
+        ...state,
+        voteModal: { openModalVote: true, voteData: action.voteData },
+      };
+    case "close_vote_modal":
+      return { ...state, voteModal: { openModalVote: false, voteData: null } };
+
     case "close_modal":
       return { ...state, modalMenu: { openModal: false, modalType: "menu" } };
 
