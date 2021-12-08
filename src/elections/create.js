@@ -176,7 +176,7 @@ const CreateElection = () => {
   };
 
   // Create Election Function
-  const createElection = () => {
+  const createElection = async () => {
     // check if localStorage items were deleted.
     if (!walletType || !walletAddress) {
       dispatch({ type: "modal_connect" });
@@ -190,6 +190,18 @@ const CreateElection = () => {
 
     if (items.length < 2) {
       alert("Minimum of two candidates required!");
+      return;
+    }
+
+    // check if the user has sufficient balance to go on with the transaction
+    const accountInformation = await algodClient
+      .accountInformation(walletAddress)
+      .do();
+    const myBalance = accountInformation.amount / 1000000;
+    if (myBalance < items.length * choiceToSend + 1) {
+      alert(
+        "Your balance does not meet the requirement to create an election with specified candidates."
+      );
       return;
     }
 
