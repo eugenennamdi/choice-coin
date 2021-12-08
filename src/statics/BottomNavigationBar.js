@@ -1,4 +1,4 @@
-const BottomNavigationBar = ({ NavLink }) => {
+const BottomNavigationBar = ({ NavLink, darkTheme }) => {
   return (
     <footer className="ft_sm">
       <ul className="ft_sm_inn">
@@ -42,26 +42,25 @@ const BottomNavigationBar = ({ NavLink }) => {
         </li>
 
         {/* Transfer Section */}
-        <li
-          className="ft_sm_li"
-          style={{
-            width: "35px",
-            height: "35px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "var(--main-col)",
-            borderRadius: "100%",
-          }}
-        >
+        <li className="ft_sm_li">
           <NavLink
             style={({ isActive }) => {
               return {
+                width: "35px",
+                height: "35px",
                 display: "flex",
-                fontSize: isActive ? "14px" : "13px",
-                fontWeight: isActive && "600",
+                borderRadius: "100%",
                 alignItems: "center",
-                flexDirection: "column",
+                justifyContent: "center",
+                fontWeight: isActive && "600",
+                background: "var(--main-col)",
+                color: !darkTheme ? "#fff" : "",
+                border: isActive
+                  ? darkTheme
+                    ? "1px solid var(--wht)"
+                    : "1px solid #666"
+                  : "none",
+                fontSize: isActive ? "14px" : "13px",
               };
             }}
             to={`/transfer`}

@@ -4,6 +4,7 @@ import loadable from "@loadable/component";
 import { Provider as ReduxProvider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+
 const MainPage = loadable(() => import("./MainPage"));
 const PopFromBottomModal = loadable(() =>
   import("./statics/PopFromBottomModal")

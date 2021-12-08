@@ -12,6 +12,10 @@
   align-items: center;
 }
 
+.big_screen .stt_elt {
+  padding-top: calc(15vh + var(--sm-hd-height-half));
+}
+
 .stt_elt_inn {
   width: 420px;
   max-width: 88vw;

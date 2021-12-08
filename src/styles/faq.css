@@ -33,6 +33,11 @@
   z-index: 2;
   background: var(--background);
   top: calc(var(--sm-hd-height));
+  margin: 10px 0px;
+}
+
+.big_screen .faq_hd {
+  margin: 10px 0px 20px;
 }
 .faq_hd p {
   opacity: 0.7;

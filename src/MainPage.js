@@ -11,13 +11,23 @@ import TopNavigationBar from "./statics/TopNavigationBar";
 import BottomNavigationBar from "./statics/BottomNavigationBar";
 
 import { useSelector } from "react-redux";
+import { useWindowSize } from "@react-hook/window-size";
 
 const MainPage = () => {
+  const [width] = useWindowSize();
   const darkTheme = useSelector((state) => state.status.darkTheme);
 
   return (
     <main
-      className={`${darkTheme ? "dark_theme" : "light_theme"}`}
+      className={`${
+        darkTheme
+          ? width > 800
+            ? "dark_theme big_screen"
+            : "dark_theme"
+          : width > 800
+          ? "light_theme big_screen"
+          : "light_theme"
+      }`}
       id="main_main"
     >
       <TopNavigationBar darkTheme={darkTheme} />
@@ -32,7 +42,7 @@ const MainPage = () => {
         <Route path="/faq" element={<Faq />} />
       </Routes>
 
-      <BottomNavigationBar NavLink={NavLink} />
+      <BottomNavigationBar NavLink={NavLink} darkTheme={darkTheme} />
     </main>
   );
 };

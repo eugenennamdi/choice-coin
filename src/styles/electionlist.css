@@ -33,6 +33,9 @@
   top: calc(var(--sm-hd-height));
   border-bottom: 1px solid var(--border-default);
 }
+.big_screen .ptt_hd {
+  margin-bottom: 30px;
+}
 .ptt_hd p {
   opacity: 0.7;
 }

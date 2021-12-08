@@ -1,17 +1,26 @@
-import { useState } from "react";
 import Switch from "react-switch";
 import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 
 const Toggle = ({ darkTheme }) => {
   const dispatch = useDispatch();
 
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("mode") == "light") {
+      setChecked(true);
+    }
+  }, []);
+
   const handleChange = (nextChecked) => {
     setChecked(nextChecked);
 
     if (!darkTheme) {
+      localStorage.setItem("mode", "dark");
       dispatch({ type: "dark_mode" });
     } else {
+      localStorage.setItem("mode", "light");
       dispatch({ type: "light_mode" });
     }
   };

@@ -54,8 +54,8 @@ const Index = () => {
 
     // send choice to wallet
     const suggestedParams = await algodClient.getTransactionParams().do();
-    const amountToSend = amount * 100;
-    // console.log(typeof amountToSend, typeof amount);
+    const amountToSend = Math.abs(amount * 100);
+    // console.log(typeof amountToSend, amountToSend);
 
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
       from: walletAddress,
@@ -66,21 +66,26 @@ const Index = () => {
     });
 
     // based on wallet type
-    if (walletType === "my-algo") {
-      const signedTxn = await myAlgoWallet.signTransaction(txn.toByte());
-      await algodClient.sendRawTransaction(signedTxn.blob).do();
-    } else if (walletType === "algosigner") {
-      const signedTxn = await window.AlgoSigner.signTxn([
-        { txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()) },
-      ]);
-      await algodClient
-        .sendRawTransaction(
-          window.AlgoSigner.encoding.base64ToMsgpack(signedTxn[0].blob)
-        )
-        .do();
-    }
+    try {
+      if (walletType === "my-algo") {
+        const signedTxn = await myAlgoWallet.signTransaction(txn.toByte());
+        await algodClient.sendRawTransaction(signedTxn.blob).do();
+      } else if (walletType === "algosigner") {
+        const signedTxn = await window.AlgoSigner.signTxn([
+          { txn: window.AlgoSigner.encoding.msgpackToBase64(txn.toByte()) },
+        ]);
+        await algodClient
+          .sendRawTransaction(
+            window.AlgoSigner.encoding.base64ToMsgpack(signedTxn[0].blob)
+          )
+          .do();
+      }
 
-    alert(`${amount} $CHOICE sent successfully to ${addr}!`);
+      alert(`${amount} $CHOICE sent successfully to ${addr}!`);
+    } catch (error) {
+      console.log(error);
+      window.location.reload();
+    }
   };
 
   const setMaxBalance = () => {
