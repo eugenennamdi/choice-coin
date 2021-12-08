@@ -31,11 +31,11 @@ const PopFromBottomModalToVote = () => {
       const address = accounts[0].address;
 
       // if the address trying to vote is the same as the election creator
-      if (address === voteData.election.wallet.address) {
-        alert("You cannot vote in an election you created");
-        dispatch({ type: "close_vote_modal" });
-        return;
-      }
+      // if (address === voteData.election.wallet.address) {
+      //   alert("You cannot vote in an election you created");
+      //   dispatch({ type: "close_vote_modal" });
+      //   return;
+      // }
 
       const myAccountInfo = await algodClient
         .accountInformation(walletAddress)
