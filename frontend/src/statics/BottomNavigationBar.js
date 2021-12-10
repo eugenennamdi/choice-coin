@@ -82,13 +82,17 @@ const BottomNavigationBar = ({ NavLink, darkTheme }) => {
                 flexDirection: "column",
               };
             }}
-            to={`/participate`}
-            key={"participate"}
+            to={`/faq`}
+            key={"faq"}
           >
-            <i className="uil uil-check-square"></i>
-            {/* <p>Participate</p> */}
+            <i
+              className="uil uil-shield-question"
+              style={{ fontSize: "21px" }}
+            ></i>
+            {/* <p>FAQ</p> */}
           </NavLink>
         </li>
+
         <li className="ft_sm_li">
           <NavLink
             style={({ isActive }) => {
@@ -101,14 +105,10 @@ const BottomNavigationBar = ({ NavLink, darkTheme }) => {
                 flexDirection: "column",
               };
             }}
-            to={`/faq`}
-            key={"faq"}
+            to={`/settings`}
+            key={"settings"}
           >
-            <i
-              className="uil uil-shield-question"
-              style={{ fontSize: "21px" }}
-            ></i>
-            {/* <p>FAQ</p> */}
+            <i className="uil uil-setting"></i>
           </NavLink>
         </li>
       </ul>

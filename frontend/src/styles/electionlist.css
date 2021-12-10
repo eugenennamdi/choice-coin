@@ -117,9 +117,25 @@
   margin: 13px 0px;
   flex-wrap: wrap;
   text-transform: uppercase;
-  flex-direction: row;
+  flex-direction: column;
   white-space: nowrap;
-  justify-content: space-between;
+}
+
+.amountToCommit {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 7px 0px 10px;
+}
+.amountToCommit p {
+  margin-right: 20px;
+}
+.amountToCommit input {
+  flex: 1;
+  font-size: 15px;
+  padding: 7px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--bord-dark);
 }
 
 .card_cand_list {

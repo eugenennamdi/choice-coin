@@ -8,6 +8,8 @@ import { URL } from "../constants";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import BarLoader from "react-spinners/BarLoader";
+
 const Chart = loadable(() => import("../components/Chart"));
 
 const ElectionList = () => {
@@ -29,9 +31,47 @@ const ElectionList = () => {
     });
   };
 
-  if (isLoading) return "Loading...";
+  if (isLoading) {
+    return (
+      <>
+        <div className="ptt_elt">
+          <div className="ptt_elt_inn">
+            <div className="ptt_hd">
+              <p>Participate in Ongoing Elections</p>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                minHeight: "200px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                fontWeight: "500",
+                color: "var(--wht)",
+                justifyContent: "center",
+                textTransform: "uppercase",
+              }}
+            >
+              <p style={{ opacity: 0.5, marginBottom: "30px" }}>
+                Loading elections...
+              </p>
+
+              <BarLoader
+                color={"#eee"}
+                loading={true}
+                size={10}
+                speedMultiplier={0.5}
+              />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   if (error) return "An error has occurred: " + error.message;
+
+  // console.log(data);
 
   return (
     <div className="ptt_elt">
@@ -61,7 +101,16 @@ const ElectionList = () => {
                 <div className="card_cand">
                   <div className="card_cand_hd">
                     <p>Candidates</p>
-                    <p>Amt:&nbsp;{slug?.choice_per_vote}</p>
+
+                    <div className="amountToCommit">
+                      <p>Amount to commit:</p>
+                      <input
+                        type="number"
+                        min="1"
+                        placeholder="1"
+                        className="amtToCommitInp"
+                      />
+                    </div>
                   </div>
 
                   <ul className="card_cand_list">
@@ -125,9 +174,18 @@ const ElectionList = () => {
                             .closest(".card_cand")
                             .find(".vote_now_list");
 
+                          var amountToSend = $(e.target)
+                            .closest(".card_cand")
+                            .find(".amtToCommitInp")
+                            .val();
+
+                          var amt = !!amountToSend
+                            ? amountToSend
+                            : slug.choice_per_vote;
+
                           placeVote(
                             $("input[name=options]:checked", voteVal).val(),
-                            slug.choice_per_vote,
+                            amt,
                             slug
                           );
                         }}

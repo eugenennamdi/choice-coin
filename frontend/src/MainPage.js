@@ -3,7 +3,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Faq from "./faq";
 import Home from "./Home";
 import Elections from "./elections";
-import Participate from "./participate";
+import Settings from "./settings";
 import Transfer from "./transfer";
 import CreateElection from "./elections/create";
 
@@ -38,7 +38,7 @@ const MainPage = () => {
         <Route path="/elections" element={<Elections />} />
         <Route path="/transfer" element={<Transfer />} />
         <Route path="/elections/create" element={<CreateElection />} />
-        <Route path="/participate" element={<Participate />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/faq" element={<Faq />} />
       </Routes>
 
