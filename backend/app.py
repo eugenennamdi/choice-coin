@@ -3,7 +3,7 @@ import secrets
 
 import sqlalchemy
 from algosdk import constants, encoding
-from algosdk.v2client import algod
+from algosdk.v2client import algod, indexer
 from decouple import config
 from marshmallow import Schema, fields
 from marshmallow.decorators import post_dump
@@ -36,8 +36,12 @@ migrate = Migrate(app, db)
 
 algod_address = "https://testnet-algorand.api.purestake.io/ps2"
 algod_token = "fi0QdbiBVl8hsVMCA2SUg6jnQdvAzxY48Zy2G6Yc"
+
+indexer_address = "https://testnet-algorand.api.purestake.io/idx2"
 headers = {"x-api-key": algod_token}
+
 algod_client = algod.AlgodClient(algod_token, algod_address, headers)
+indexer_client = indexer.IndexerClient(algod_token, indexer_address, headers)
 
 CHOICE_ID = 21364625
 
@@ -278,9 +282,24 @@ def count_votes(candidates, choice_per_vote):
     for candidate in candidates:
         _ = count(candidate.address)
         labels.append(candidate.name)
-        values.append(_ / choice_per_vote)
+        values.append(_ / 100)
     print(labels, values)
     return labels, values
+
+
+def get_choice_committed_to_address(indexer_client: indexer.IndexerClient, address):
+    transactions = indexer_client.search_transactions_by_address(
+        address, CHOICE_ID, txn_type="axfer"
+    )
+    txns = [
+        {
+            "receiver": txn["asset-transfer-transaction"]["receiver"],
+            "amount": txn["asset-transfer-transaction"]["amount"],
+        }
+        for txn in transactions["transactions"]
+    ]
+
+    return txns
 
 
 ##################################################################################################
@@ -430,6 +449,31 @@ def view_result(slug):
             status="success",
             message="Result fetched successfully!",
             data={"labels": labels, "values": values},
+        ),
+        200,
+    )
+
+
+@app.get("/committed/<address>")
+def amount_committed_to_address(address):
+    if not encoding.is_valid_address(address):
+        return jsonify(status="error", message="Invalid address provided!"), 400
+
+    candidates = Candidate.query.all()
+    candidates = [candidate.address for candidate in candidates]
+
+    transactions = get_choice_committed_to_address(indexer_client, address)
+    amount = 0
+
+    for transaction in transactions:
+        if transaction["receiver"] in candidates:
+            amount += transaction["amount"] / 100
+
+    return (
+        jsonify(
+            status="success",
+            data={"amount": amount},
+            message="Amount committed to governance returned successfully!",
         ),
         200,
     )
