@@ -5,6 +5,12 @@ import { useSelector } from "react-redux";
 const Participate = () => {
   const darkTheme = useSelector((state) => state.status.darkTheme);
 
+  const LogOut = () => {
+    localStorage.clear();
+    window.location.reload();
+    console.log("data");
+  };
+
   return (
     <>
       <div className="settings">
@@ -89,6 +95,13 @@ const Participate = () => {
               <div className="theme_tog">
                 <Toggle darkTheme={darkTheme} />
               </div>
+            </div>
+
+            <div className="logOutButt" onClick={LogOut}>
+              <p>
+                Log Out{" "}
+                <i class="uil uil-signout" style={{ fontSize: "16px" }}></i>
+              </p>
             </div>
           </div>
 

@@ -25,8 +25,6 @@ const TopNavigationBar = ({ darkTheme }) => {
         .accountInformation(walletAddress)
         .do();
 
-      console.log(myAccountInfo);
-
       const b = myAccountInfo.assets
         ? myAccountInfo.assets.find(
             (element) => element["asset-id"] === ASSET_ID

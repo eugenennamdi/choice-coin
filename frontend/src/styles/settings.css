@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 30px;
 }
 .togglyButt {
@@ -71,4 +71,21 @@
   flex-direction: row;
   align-items: center;
   padding-bottom: 2px;
+}
+
+/*  */
+
+.logOutButt {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  flex-direction: row;
+  color: var(--wht);
+  border-radius: 8px;
+  padding: 13px 18px;
+  background: var(--back-1);
+  border: 1px solid var(--border-default);
+}
+.light_theme .logOutButt {
+  font-weight: 500;
 }

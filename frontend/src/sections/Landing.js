@@ -1,8 +1,21 @@
+import axios from "axios";
 import "../styles/landing.css";
+import { URL } from "../constants";
+import { useQuery } from "react-query";
 import loadable from "@loadable/component";
 const ScrollTextLand = loadable(() => import("../components/ScrollTextLand"));
 
 const Landing = () => {
+  //
+
+  const walletAddress = localStorage.getItem("address");
+
+  const { isLoading, error, data } = useQuery("committed", () =>
+    axios
+      .get(`${URL}/committed/${walletAddress}`)
+      .then((response) => response.data.data)
+  );
+
   return (
     <div className="landing" id="landing">
       <ScrollTextLand
@@ -18,7 +31,7 @@ const Landing = () => {
           textTransform: "uppercase",
         }}
       >
-        Amount committed to Governance:
+        Amount committed to Governance: {!isLoading && !error && data.amount}
       </div>
 
       <div className="land_cov">
