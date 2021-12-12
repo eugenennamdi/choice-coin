@@ -116,6 +116,28 @@ main {
   text-align: center;
 }
 
+/* ****************** */
+.listNavBig {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.listNavBig li {
+  /* opacity: 0.8; */
+  font-size: 12px;
+  margin: 0px 8px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  padding-bottom: 3px;
+}
+.listNavBig li:hover {
+  border-bottom: 1px solid var(--wht);
+}
+
+/* ****************** */
+
 .dropDownConnect {
   position: relative;
 }

@@ -5,7 +5,6 @@ import loadable from "@loadable/component";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { URL } from "../constants";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import BarLoader from "react-spinners/BarLoader";
