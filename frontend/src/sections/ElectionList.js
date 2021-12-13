@@ -111,7 +111,7 @@ const ElectionList = () => {
                     <div className="card_elt_tit">{slug.title}</div>
                   </div>
 
-                  <div className="electionEndTime">Ends on:</div>
+                  {/* <div className="electionEndTime">Ends on:</div> */}
                 </div>
 
                 <div className="card_elt_desc">{slug?.card_desc}</div>
