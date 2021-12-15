@@ -187,7 +187,7 @@ const TopNavigationBar = ({ darkTheme }) => {
             textTransform: "uppercase",
           }}
         >
-          Choice Coin
+          <strong>Choice Coin</strong>
         </div>
 
         <div
@@ -260,7 +260,7 @@ const TopNavigationBar = ({ darkTheme }) => {
                       alt=""
                     />
                   </div>
-                  <p className="dropDownConnect_item_txt">My Algo Wallet</p>
+                  <p className="dropDownConnect_item_txt">Algo-Wallet</p>
                 </div>
 
                 <div
@@ -288,7 +288,7 @@ const TopNavigationBar = ({ darkTheme }) => {
                     />
                   </div>
                   <p className="dropDownConnect_item_txt">
-                    Algorand Mobile Wallet
+                    Algorand Wallet(MOBILE)
                   </p>
                 </div>
               </div>
@@ -317,20 +317,19 @@ const TopNavigationBar = ({ darkTheme }) => {
         }}
       >
         <p style={{ opacity: "0.9" }}>
-          Amount committed to Governance:&nbsp;
+          Amount of Choice Coin used for voting:&nbsp;
           {!!walletAddress && <GetCommittedAmount />} $Choice
         </p>
 
         {width > 850 && (
           <ul className="listNavBig">
             <li onClick={setMode}>
-              M
+              LIGHT/DARK 
               {darkTheme ? (
                 <i className="uil uil-brightness-low"></i>
               ) : (
                 <i className="uil uil-moon"></i>
               )}
-              de
             </li>
             <li onClick={LogOut}>Sign Out</li>
           </ul>

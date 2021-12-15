@@ -50,8 +50,8 @@ const ElectionList = () => {
       is_finished: false,
       is_started: true,
       process_image: "https://i.postimg.cc/90XSyrjH/choice.png",
-      slug: "is-choice-coin-the-best-b0c7db",
-      title: "Is Choice Coin the best?",
+      slug: "CHOICE-COIN-IS-A-STANDARD-ALGORAND-ASSET-b0c7db",
+      title: "CHOICE COIN IS A STANDARD ALGORAND ASSET",
       wallet: {
         address: "NX4T2FTIGNPVPSMEXJFMMKD46O4HRCPN25BDHOUW2SWXANZPQBZEDYKDVE",
       },
@@ -317,7 +317,7 @@ const ElectionList = () => {
     <div className="ptt_elt">
       <div className="ptt_elt_inn">
         <div className="ptt_hd">
-          <p>Participate in Voting process</p>
+          <p><strong>CHOICE-COIN VOTING PARTICIPATION</strong></p>
         </div>
         <ul className="card_list">
           {data?.map((slug, index) => {
@@ -352,7 +352,7 @@ const ElectionList = () => {
                 <div className="card_cand">
                   <div className="card_cand_hd">
                     <div className="amountToCommit">
-                      <p>Amount to commit:</p>
+                      <p>Amount of Choice to commit:</p>
                       <input
                         type="number"
                         min="1"
