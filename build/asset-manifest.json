@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/choice-coin/static/css/main.8d589181.chunk.css",
+    "main.js": "/choice-coin/static/js/main.c5834721.chunk.js",
+    "runtime-main.js": "/choice-coin/static/js/runtime-main.1900dd45.js",
+    "static/css/2.afdc6626.chunk.css": "/choice-coin/static/css/2.afdc6626.chunk.css",
+    "static/js/2.23d792df.chunk.js": "/choice-coin/static/js/2.23d792df.chunk.js",
+    "static/js/3.baf716dc.chunk.js": "/choice-coin/static/js/3.baf716dc.chunk.js",
+    "static/css/4.c5221b64.chunk.css": "/choice-coin/static/css/4.c5221b64.chunk.css",
+    "static/js/4.fea4a35d.chunk.js": "/choice-coin/static/js/4.fea4a35d.chunk.js",
+    "index.html": "/choice-coin/index.html",
+    "static/js/2.23d792df.chunk.js.LICENSE.txt": "/choice-coin/static/js/2.23d792df.chunk.js.LICENSE.txt",
+    "static/js/3.baf716dc.chunk.js.LICENSE.txt": "/choice-coin/static/js/3.baf716dc.chunk.js.LICENSE.txt",
+    "static/media/algosigner.svg": "/choice-coin/static/media/algosigner.abcce80b.svg",
+    "static/media/walletconnect.png": "/choice-coin/static/media/walletconnect.5d52c14c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1900dd45.js",
+    "static/js/3.baf716dc.chunk.js",
+    "static/css/main.8d589181.chunk.css",
+    "static/js/main.c5834721.chunk.js"
+  ]
+}
