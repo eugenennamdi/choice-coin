@@ -19,13 +19,13 @@ const GetCommittedAmount = () => {
 
   const options = [
     {
-      address: "DQ2NPLGQ3CV3QAPMS7KHIRUNUF2ZSTYRT5SZGDCPLB7VPC5OSSLCI5H7DM",
+      address: "4PE6M3AC52LVWG237WAFCCEU4HGP2WVDDJ4WX2D3R3LPKOPSQKV2EXO4QY",
       image: "",
       name: "Yes",
     },
 
     {
-      address: "6P6D5KQH5VIXEJGW6LXPUMEZ77XNLHQXB6GMW4CBDBN2VJ4CFZ7HCIKUBM",
+      address: "4PE6M3AC52LVWG237WAFCCEU4HGP2WVDDJ4WX2D3R3LPKOPSQKV2EXO4QY",
       image: "",
       name: "No",
     },
